@@ -1,2 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{58c92d81-dfca-4b59-a639-d85b46b85dd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine">
+      <UniqueIdentifier>{7bac74fa-1f81-4a83-94a5-cbe94d7cf3c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStage">
+      <UniqueIdentifier>{8572d3d7-b22d-4b05-b7f6-1ec8bb683085}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine.cpp">
+      <Filter>GameEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStage.cpp">
+      <Filter>GameStage</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameEngine.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStage.h">
+      <Filter>GameStage</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
