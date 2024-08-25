@@ -4,10 +4,10 @@
 
 int main()
 {
-	if (GameEngine::Init() == false)
+	if (GameEngineInit() == false)
 	{
 		return false;
 	}
 
-	return GameEngine::Start();
+	return GameEngineStart();
 }

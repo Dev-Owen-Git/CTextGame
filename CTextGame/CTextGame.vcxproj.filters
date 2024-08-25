@@ -10,6 +10,18 @@
     <Filter Include="GameStage">
       <UniqueIdentifier>{8572d3d7-b22d-4b05-b7f6-1ec8bb683085}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{a5f5c314-d84d-4397-9c06-09b79011e268}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStage\Game">
+      <UniqueIdentifier>{fc8bc0a3-8553-4684-8922-b808571b5335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{69b0c1c9-cb4d-4469-8e3a-440ae9905819}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File">
+      <UniqueIdentifier>{a676921e-0ceb-48df-9147-ddca788bb921}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,6 +33,21 @@
     <ClCompile Include="GameStage.cpp">
       <Filter>GameStage</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>GameStage\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameRate.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -28,6 +55,21 @@
     </ClInclude>
     <ClInclude Include="GameStage.h">
       <Filter>GameStage</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>GameStage\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameRate.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>File</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

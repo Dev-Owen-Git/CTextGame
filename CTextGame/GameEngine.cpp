@@ -1,13 +1,35 @@
 #include "GameEngine.h"
 
 #include "GameStage.h"
+#include <Windows.h>
+#include "Renderer.h"
+#include "FrameRate.h"
 
-bool GameEngine::Init()
+bool GameEngineInit()
 {
-    return GameStage::SetStage(GameStage::StageType::TITLE);
+    InitFrameRate(30);
+
+    StageInit();
+    RendererInit();
+
+    return SetStage(StageType::TITLE);
 }
 
-int GameEngine::Start()
+int GameEngineStart()
 {
+    while (true)
+    {
+        if ( CheckForFrame() == true )
+        {
+            StateInput();
+            StateProcess();
+            StateRender();
+        }
+        else
+        {
+            UpdateFrame();
+        }
+    }
+
     return 0;
 }
