@@ -12,13 +12,14 @@ bool GameEngineInit()
     StageInit();
     RendererInit();
 
-    return SetStage(StageType::TITLE);
+    return SetStage(StageType::Title);
 }
 
 int GameEngineStart()
 {
     while (true)
     {
+        //// Sleep 함수 하고 최대한 50FPS에 맞추기
         if ( CheckForFrame() == true )
         {
             StateInput();
@@ -29,6 +30,11 @@ int GameEngineStart()
         {
             UpdateFrame();
         }
+
+       /* StateInput();
+        StateProcess();
+        StateRender();
+        WaitforFrame();*/
     }
 
     return 0;

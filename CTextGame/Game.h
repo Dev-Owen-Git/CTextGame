@@ -22,8 +22,8 @@ struct Bullet
 	uvector2 Position;
 };
 
-const int MAX_MONSTER_COUNT = 10;
 const int MAX_BULLET_COUNT = 10;
+const int MAX_MONSTER_COUNT = 10;
 
 extern Enitiy Player;
 extern Enitiy Monsters[MAX_MONSTER_COUNT];

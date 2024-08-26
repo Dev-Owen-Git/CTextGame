@@ -2,9 +2,9 @@
 
 enum class StageType
 {
-	TITLE,
-	GAME,
-	OVER,
+	Title,
+	Game,
+	Over,
 	STAGE_TYPE_COUNT
 };
 

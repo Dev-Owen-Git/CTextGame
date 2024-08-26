@@ -1,10 +1,17 @@
 #include "GameStage.h"
 #include "Renderer.h"
+#include "File.h"
 #include "Game.h"
 
 #include <Windows.h>
 
 // COMMON //
+
+#define AddStage(stgaeName) \
+	initHandler[(int)StageType::##stgaeName]		= ##stgaeName##Init;		\
+	inputHandler[(int)StageType::##stgaeName]		= ##stgaeName##Input;		\
+	processHandler[(int)StageType::##stgaeName]		= ##stgaeName##Process;		\
+	renderHandler[(int)StageType::##stgaeName]		= ##stgaeName##Render
 
 bool(*initHandler[(int)StageType::STAGE_TYPE_COUNT])();
 int(*inputHandler[(int)StageType::STAGE_TYPE_COUNT])();
@@ -15,20 +22,9 @@ StageType currentStageType;
 
 bool StageInit()
 {
-	initHandler[(int)StageType::TITLE]		= TitleInit;
-	inputHandler[(int)StageType::TITLE]		= TitleInput;
-	processHandler[(int)StageType::TITLE]	= TitleProcess;
-	renderHandler[(int)StageType::TITLE]	= TitleRender;
-
-	initHandler[(int)StageType::GAME]		= GameInit;
-	inputHandler[(int)StageType::GAME]		= GameInput;
-	processHandler[(int)StageType::GAME]	= GameProcess;
-	renderHandler[(int)StageType::GAME]		= GameRender;
-
-	initHandler[(int)StageType::OVER]		= OverInit;
-	inputHandler[(int)StageType::OVER]		= OverInput;
-	processHandler[(int)StageType::OVER]	= OverProcess;
-	renderHandler[(int)StageType::OVER]		= OverRender;
+	AddStage(Title);
+	AddStage(Game);
+	AddStage(Over);
 
 	return true;
 }
@@ -88,7 +84,7 @@ int TitleProcess()
 {
 	if (GetAsyncKeyState(VK_SPACE))
 	{
-		if (SetStage(StageType::GAME) == false)
+		if (SetStage(StageType::Game) == false)
 		{
 			__debugbreak();
 		}
@@ -121,13 +117,25 @@ int TitleRender()
 
 
 // Game ///
+const int MAX_STAGE_COUNT = 100;
+
+struct StageInfo
+{
+	bool InVailed = false;
+
+	Enitiy		Monsters[MAX_MONSTER_COUNT];
+	uvector2	PlayerSpawnPoint;
+};
+
+StageInfo _stage[MAX_STAGE_COUNT];
+
 bool GameInit()
 {
 	// TODO 몬스터 정보 불러오기
+	LoadStage(&_stage, sizeof(StageInfo));
 	LoadPlayerData();
 	LoadMonsterData();
 	
-
 	return true;
 }
 

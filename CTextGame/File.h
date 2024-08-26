@@ -1,4 +1,3 @@
 #pragma once
 
-int AllFineFile();
-bool ReadMonsteerFile(void* outData, const int dataSize);
+bool LoadStage(void* outData, const int dataSize);

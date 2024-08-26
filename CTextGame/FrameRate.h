@@ -6,3 +6,5 @@ void InitFrameRate(const int FPS);
 bool CheckForFrame();
 
 void UpdateFrame();
+
+void WaitforFrame();

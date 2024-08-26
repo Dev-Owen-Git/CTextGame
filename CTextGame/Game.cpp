@@ -4,6 +4,7 @@
 
 #include <Windows.h>
 
+
 Enitiy Player;
 Enitiy Monsters[MAX_MONSTER_COUNT];
 Bullet bullets[MAX_BULLET_COUNT];
@@ -20,7 +21,6 @@ void LoadPlayerData()
 
 void LoadMonsterData()
 {
-
 }
 
 bool PlayerInput()
@@ -78,6 +78,7 @@ int PlayerRender()
 
 int BulletProcess()
 {
+	// TODO : stage monster 정보 가져오기
 	for (unsigned int bulletIndex = 0; bulletIndex < MAX_BULLET_COUNT; bulletIndex++)
 	{
 		Bullet& bullet = bullets[bulletIndex];
