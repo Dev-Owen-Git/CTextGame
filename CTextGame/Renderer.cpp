@@ -26,6 +26,8 @@ bool ClearBuffer()
     return true;
 }
 
+
+
 bool CopyDataToRendBuffer(const uvector2 position, char render)
 {
     renderBuffer[position.y][position.x] = render;

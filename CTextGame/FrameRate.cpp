@@ -1,55 +1,59 @@
 #include "FrameRate.h"
 
+#include "Renderer.h"
+
 #include <Windows.h>
+#pragma comment(lib, "Winmm.lib")
 
-LARGE_INTEGER _freq, _currTime, _prevTime;
+LARGE_INTEGER _freq, _frameStartTime, _currentFrameTime;
 
-int _fps;
-int _fpsMS;
-float _deltaTime, _elapsedTime;
+unsigned int _fps;
+float _fpsMS;
 
-void InitFrameRate(const int fps)
+unsigned short _frameCount = 0;
+
+void InitFrameRate(const unsigned int fps)
 {
     _fps = fps;
-    _fpsMS = 1 / _fps ;
+    _fpsMS = 1.0f / _fps ;
 
     QueryPerformanceFrequency(&_freq);
-    QueryPerformanceCounter(&_currTime);
-    QueryPerformanceCounter(&_prevTime);
-}
-
-bool CheckForFrame() 
-{
-    if (_elapsedTime >= _fpsMS)
-    {
-        _elapsedTime = 0;
-        return true;
-    }
-
-    return false;
-}
-
-
-void UpdateFrame()
-{
-    QueryPerformanceCounter(&_currTime);
-
-    _elapsedTime += (_currTime.QuadPart - _prevTime.QuadPart) / (float)_freq.QuadPart;
-
-    _prevTime = _currTime;
+    QueryPerformanceCounter(&_frameStartTime);
+    QueryPerformanceCounter(&_currentFrameTime);
 }
 
 void WaitforFrame()
 {
-    QueryPerformanceCounter(&_currTime);
+    QueryPerformanceCounter(&_currentFrameTime);
+    auto processTime = (_currentFrameTime.QuadPart - _frameStartTime.QuadPart) / (float)_freq.QuadPart;
 
-    // TODO a 변수명 변경
-    auto a = (_currTime.QuadPart - _prevTime.QuadPart);
-    auto deltaTime = a / (float)_freq.QuadPart;
+    if (_fpsMS >= processTime)
+    {
+        //Sleep((_fpsMS - processTime) * 1000);
+        Sleep(20);
+    }
 
-    _currTime.QuadPart -= (deltaTime - _fpsMS) * (float)_freq.QuadPart;
+    _frameStartTime.QuadPart += _fpsMS * _freq.QuadPart;
+}
 
-    _prevTime = _currTime;
 
-    Sleep((_currTime.QuadPart / (float)_freq.QuadPart));
+
+int ProcessFrame()
+{
+    _frameCount++;
+    Sleep(100);
+    return 0;
+}
+
+int RenderFrame()
+{
+    static unsigned int frameRenderTime = timeGetTime();
+    
+    if (timeGetTime() - frameRenderTime >= 1000)
+    {
+        _frameCount = 0;
+        frameRenderTime = timeGetTime();
+    }
+
+    return 0;
 }

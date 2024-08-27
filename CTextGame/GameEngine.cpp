@@ -7,7 +7,7 @@
 
 bool GameEngineInit()
 {
-    InitFrameRate(30);
+    InitFrameRate(60);
 
     StageInit();
     RendererInit();
@@ -19,22 +19,17 @@ int GameEngineStart()
 {
     while (true)
     {
-        //// Sleep 함수 하고 최대한 50FPS에 맞추기
-        if ( CheckForFrame() == true )
-        {
-            StateInput();
-            StateProcess();
-            StateRender();
-        }
-        else
-        {
-            UpdateFrame();
-        }
+        // frame
+        ProcessFrame();
+        RenderFrame();
 
-       /* StateInput();
+        // Process
+      /*  StateInput();
         StateProcess();
-        StateRender();
-        WaitforFrame();*/
+        StateRender();*/
+
+        // Wait
+        WaitforFrame();
     }
 
     return 0;

@@ -1,10 +1,9 @@
 #pragma once
 
 
-void InitFrameRate(const int FPS);
-
-bool CheckForFrame();
-
-void UpdateFrame();
+void InitFrameRate(const unsigned  int FPS);
 
 void WaitforFrame();
+
+int ProcessFrame();
+int RenderFrame();
