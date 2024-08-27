@@ -24,9 +24,12 @@ int GameEngineStart()
         RenderFrame();
 
         // Process
-      /*  StateInput();
+        StateInput();
         StateProcess();
-        StateRender();*/
+        StateRender();
+
+        // BUFFER ±×¸®±â
+        DrawBuffer();
 
         // Wait
         WaitforFrame();

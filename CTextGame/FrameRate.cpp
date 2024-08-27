@@ -1,64 +1,65 @@
 #include "FrameRate.h"
 
 #include "Renderer.h"
-
+#include <stdlib.h>
 #include <Windows.h>
 #pragma comment(lib, "Winmm.lib")
 
-LARGE_INTEGER _freq, _frameStartTime, _currentFrameTime;
 
-unsigned int _fps;
-float _fpsMS;
+unsigned int _fps, _fpsToSeconds;
 
-unsigned short _frameCount = 0;
+unsigned short _currentFrameCount = 0;
+unsigned short _prevFrameCount = 0;
+
+int _currentFrameTime, _startFrameTime;
 
 void InitFrameRate(const unsigned int fps)
 {
     _fps = fps;
-    _fpsMS = 1.0f / _fps ;
-
-    QueryPerformanceFrequency(&_freq);
-    QueryPerformanceCounter(&_frameStartTime);
-    QueryPerformanceCounter(&_currentFrameTime);
+    _fpsToSeconds = 1000 / _fps;
 
     timeBeginPeriod(1);
+
+    _currentFrameTime = timeGetTime();
+    _startFrameTime = timeGetTime();
 }
 
 void WaitforFrame()
 {
-    QueryPerformanceCounter(&_currentFrameTime);
-    auto processTime = (_currentFrameTime.QuadPart - _frameStartTime.QuadPart) / (float)_freq.QuadPart;
+    _currentFrameTime = timeGetTime();
 
-    if (_fpsMS >= processTime)
-    {
-        Sleep((_fpsMS - processTime) * 1000);
-    }
-    else
-    {
+    auto processTime = _currentFrameTime - _startFrameTime;
 
+    if (_fpsToSeconds >= processTime)
+    {
+        Sleep(_fpsToSeconds - processTime);
     }
 
-    _frameStartTime.QuadPart += _fpsMS * _freq.QuadPart;
+    _startFrameTime += _fpsToSeconds;
 }
 
 
 
 int ProcessFrame()
 {
-    _frameCount++;
+    _currentFrameCount++;
+
+    static unsigned int frameRenderTime = timeGetTime();
+
+    if (timeGetTime() - frameRenderTime >= 1000)
+    {
+        _prevFrameCount = _currentFrameCount;
+        _currentFrameCount = 0;
+        frameRenderTime = timeGetTime();
+    }
     return 0;
 }
 
 int RenderFrame()
 {
-    static unsigned int frameRenderTime = timeGetTime();
-    
-    if (timeGetTime() - frameRenderTime >= 1000)
-    {
-        printf("%d\n", _frameCount);
-        _frameCount = 0;
-        frameRenderTime = timeGetTime();
-    }
+    static char buffer[sizeof(_prevFrameCount) + 1];
+    _itoa_s(_prevFrameCount, buffer, 10);
 
+    CopyDataToRendBuffer({ 45, 0 }, buffer);
     return 0;
 }

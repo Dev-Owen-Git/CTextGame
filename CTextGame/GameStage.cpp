@@ -55,8 +55,6 @@ int StateProcess()
 int StateRender()
 {
 	renderHandler[(int)currentStageType]();
-	DrawBuffer();
-
 	return 0;
 }
 
