@@ -20,6 +20,8 @@ void InitFrameRate(const unsigned int fps)
     QueryPerformanceFrequency(&_freq);
     QueryPerformanceCounter(&_frameStartTime);
     QueryPerformanceCounter(&_currentFrameTime);
+
+    timeBeginPeriod(1);
 }
 
 void WaitforFrame()
@@ -29,8 +31,11 @@ void WaitforFrame()
 
     if (_fpsMS >= processTime)
     {
-        //Sleep((_fpsMS - processTime) * 1000);
-        Sleep(20);
+        Sleep((_fpsMS - processTime) * 1000);
+    }
+    else
+    {
+
     }
 
     _frameStartTime.QuadPart += _fpsMS * _freq.QuadPart;
@@ -41,7 +46,6 @@ void WaitforFrame()
 int ProcessFrame()
 {
     _frameCount++;
-    Sleep(100);
     return 0;
 }
 
@@ -51,6 +55,7 @@ int RenderFrame()
     
     if (timeGetTime() - frameRenderTime >= 1000)
     {
+        printf("%d\n", _frameCount);
         _frameCount = 0;
         frameRenderTime = timeGetTime();
     }

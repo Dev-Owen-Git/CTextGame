@@ -7,7 +7,7 @@
 
 bool GameEngineInit()
 {
-    InitFrameRate(60);
+    InitFrameRate(50);
 
     StageInit();
     RendererInit();
