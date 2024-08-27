@@ -72,4 +72,9 @@
       <Filter>File</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Stage_1.txt">
+      <Filter>Utils</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
