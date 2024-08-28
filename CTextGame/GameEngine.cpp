@@ -19,17 +19,27 @@ int GameEngineStart()
 {
     while (true)
     {
-        // frame
+        //frame
         ProcessFrame();
-        RenderFrame();
+
+        // frame Test
+        if (GetAsyncKeyState(VK_F1))
+        {
+            Sleep(1000);
+        }
 
         // Process
         StateInput();
         StateProcess();
-        StateRender();
 
-        // BUFFER 그리기
-        DrawBuffer();
+        if (FrameSkip() == false)
+        {
+            RenderFrame();
+            StateRender();
+
+            // BUFFER 그리기
+            DrawBuffer();
+        }
 
         // Wait
         WaitforFrame();

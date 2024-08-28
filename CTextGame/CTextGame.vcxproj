@@ -135,6 +135,7 @@
     <ClCompile Include="GameStage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="StringUtility.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -144,10 +145,8 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameStage.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="StringUtility.h" />
     <ClInclude Include="Utility.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Stage_1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

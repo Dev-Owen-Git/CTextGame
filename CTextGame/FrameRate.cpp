@@ -1,17 +1,16 @@
 #include "FrameRate.h"
 
 #include "Renderer.h"
-#include <stdlib.h>
 #include <Windows.h>
 #pragma comment(lib, "Winmm.lib")
 
 
 unsigned int _fps, _fpsToSeconds;
 
-unsigned short _currentFrameCount = 0;
-unsigned short _prevFrameCount = 0;
+unsigned short _currentFrameCount = 0, _currentRenderCount = 0;
+unsigned short _prevFrameCount = 0, _prevRenderCount = 0;
 
-int _currentFrameTime, _startFrameTime;
+int _currentFrameTime, _startFrameTime, _frameSkipCount = 0;
 
 void InitFrameRate(const unsigned int fps)
 {
@@ -24,6 +23,11 @@ void InitFrameRate(const unsigned int fps)
     _startFrameTime = timeGetTime();
 }
 
+bool FrameSkip()
+{
+    return _frameSkipCount > 0;
+}
+
 void WaitforFrame()
 {
     _currentFrameTime = timeGetTime();
@@ -33,6 +37,15 @@ void WaitforFrame()
     if (_fpsToSeconds >= processTime)
     {
         Sleep(_fpsToSeconds - processTime);
+    }
+    
+    if (processTime >= (_fpsToSeconds << 1))
+    {
+        _frameSkipCount = (processTime / _fpsToSeconds) - 1;
+    }
+    else
+    {
+        _frameSkipCount = 0;
     }
 
     _startFrameTime += _fpsToSeconds;
@@ -50,16 +63,32 @@ int ProcessFrame()
     {
         _prevFrameCount = _currentFrameCount;
         _currentFrameCount = 0;
-        frameRenderTime = timeGetTime();
+
+        frameRenderTime += 1000;
     }
     return 0;
 }
 
 int RenderFrame()
 {
-    static char buffer[sizeof(_prevFrameCount) + 1];
-    _itoa_s(_prevFrameCount, buffer, 10);
+    _currentRenderCount++;
 
-    CopyDataToRendBuffer({ 45, 0 }, buffer);
+    static unsigned int frameRenderTime = timeGetTime();
+
+    if (timeGetTime() - frameRenderTime >= 1000)
+    {
+        _prevRenderCount = _currentRenderCount;
+        _currentRenderCount = 0;
+
+        frameRenderTime += 1000;
+    }
+
+    static char logicFrameBuffer[MAXWORD];
+    static char renderFrameBuffer[MAXWORD];
+    _itoa_s(_prevFrameCount, logicFrameBuffer, 10);
+    _itoa_s(_prevRenderCount, renderFrameBuffer, 10);
+
+    CopyDataToRendBuffer({ 45, 0 }, logicFrameBuffer);
+    CopyDataToRendBuffer({ 45, 2 }, renderFrameBuffer);
     return 0;
 }
