@@ -1,148 +1,87 @@
 #include "Game.h"
 
-#include "Renderer.h"
+#include "File.h"
 
-#include <Windows.h>
+#include "Grid.h"
+#include "Player.h"
+#include "Monster.h"
+#include "Bullet.h"
+#include "Stage.h"
 
+STAGE_FILE_INFO _stage[MAX_STAGE_COUNT];
+MONSTER_FILE_INFO _monsterInfo[MAX_MONSTER_TYPE];
 
-Enitiy Player;
-Enitiy Monsters[MAX_MONSTER_COUNT];
-Bullet bullets[MAX_BULLET_COUNT];
+int CurrentStage = 0;
 
-void LoadPlayerData()
+bool GameInit()
 {
-	Player.IsViaild = true;
-
-	Player.Hp = 10;
-	Player.Att = 1;
-
-	Player.Position = { 5 ,5 };
-}
-
-void LoadMonsterData()
-{
-}
-
-bool PlayerInput()
-{
-	if (GetAsyncKeyState(VK_LEFT))
+	if (_stage[0].isVailed == false)
 	{
-		if (Player.Position.x == 0)
-			return false;
-
-		--Player.Position.x;
+		LoadStageFiles(_stage);
+		LoadMonsterFiles(_monsterInfo);
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT))
-	{
-		if (Player.Position.x + 1 == MAP_WITDH_SIZE - 1)
-		{
-			return false;
-		}
+	GridInit();
+	BulletInit();
+	MonsterInit();
 
-		++Player.Position.x;
-	}
-
-	if (GetAsyncKeyState(VK_SPACE))
-	{
-		for (auto& bullet : bullets)
-		{
-			if ( bullet.IsViaild == false )
-			{
-				uvector2 bulletSpawnPosition = Player.Position;
-				bulletSpawnPosition.y -= 1;
-
-				bullet.Position = bulletSpawnPosition;
-
-				bullet.IsViaild = true;
-			}
-		}
-		return true;
-	}
-
-	return false;
+	SetGameStage(0);
+	return true;
 }
 
-int PlayerPorcess()
+int GameInput()
 {
-
+	PlayerInput();
 	return 0;
 }
 
-int PlayerRender()
+int GameProcess()
 {
-	CopyDataToRendBuffer(Player.Position, "@");
-
+	BulletProcess();
+	PlayerPorcess();
+	MonsterProcess();
 	return 0;
 }
 
-int BulletProcess()
+int GameRender()
 {
-	// TODO : stage monster 정보 가져오기
-	for (unsigned int bulletIndex = 0; bulletIndex < MAX_BULLET_COUNT; bulletIndex++)
-	{
-		Bullet& bullet = bullets[bulletIndex];
-
-		// 현재 활성된 총알만 체크
-		if (bullet.IsViaild == false )
-		{
-			continue;
-		}
-		
-		// 몬스터와 충돌 처리
-		for (unsigned int monsterIndex = 0; monsterIndex < MAX_MONSTER_COUNT; monsterIndex++)
-		{
-			if (Monsters[monsterIndex].IsViaild == false)
-			{
-				continue;
-			}
-
-			if (Colision(bullet.Position, Monsters[monsterIndex].Position) == true)
-			{
-				BulletHit(Monsters[monsterIndex], bullet);
-			}
-		}
-
-		BulletMove(bullet);
-	}
-
-
+	BulletRender();
+	PlayerRender();
+	MonsterRender();
 	return 0;
 }
 
-int BulletRender()
+void CreateStage(int stage)
 {
-	for (unsigned int bulletIndex = 0; bulletIndex < MAX_BULLET_COUNT; bulletIndex++)
+	// Monster 생성
+	for (const auto& stageMonsterInfo : _stage[stage].MonsterInfos)
 	{
-		Bullet& bullet = bullets[bulletIndex];
-
-		if (bullet.IsViaild == true)
+		if (stageMonsterInfo.isVailed == false)
 		{
-			CopyDataToRendBuffer(bullet.Position, '^');
+			break;
 		}
 
+		CreateMonster(_monsterInfo[stageMonsterInfo.Id], stageMonsterInfo);
 	}
 
-	return 0;
+	// Player 생성
+	LoadPlayerData(&_stage[stage]);
 }
 
-// 총알이 이동 후 맵 밖으로 나가면 제거
-void BulletMove(Bullet& bullet)
+void SetGameStage(const  int stage)
 {
-	bullet.Position.y -= 1;
-
-	if (bullet.Position.y == -1)
+	if (_stage[stage].isVailed == false)
 	{
-		bullet.IsViaild = false;
+		return;
 	}
+
+	CurrentStage = stage;
+
+	CreateStage(CurrentStage);
 }
 
-void BulletHit(Enitiy& monster, const Bullet& bullet)
+void NetGameStage()
 {
-	monster.Hp -= bullet.Att;
-
-	if (monster.Hp <= 0)
-	{
-		monster.IsViaild = false;
-	}
+	SetGameStage(CurrentStage + 1);
 }
+

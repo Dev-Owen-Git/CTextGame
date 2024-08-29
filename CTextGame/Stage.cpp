@@ -1,17 +1,18 @@
-#include "GameStage.h"
+#include "Stage.h"
 #include "Renderer.h"
 #include "File.h"
 #include "Game.h"
+#include "UIRenderer.h"
 
 #include <Windows.h>
 
 // COMMON //
 
 #define AddStage(stgaeName) \
-	initHandler[(int)StageType::##stgaeName]		= ##stgaeName##Init;		\
-	inputHandler[(int)StageType::##stgaeName]		= ##stgaeName##Input;		\
-	processHandler[(int)StageType::##stgaeName]		= ##stgaeName##Process;		\
-	renderHandler[(int)StageType::##stgaeName]		= ##stgaeName##Render
+	initHandler[(int)StageType::##stgaeName]		= On##stgaeName##Init;		\
+	inputHandler[(int)StageType::##stgaeName]		= On##stgaeName##Input;		\
+	processHandler[(int)StageType::##stgaeName]		= On##stgaeName##Process;		\
+	renderHandler[(int)StageType::##stgaeName]		= On##stgaeName##Render
 
 bool(*initHandler[(int)StageType::STAGE_TYPE_COUNT])();
 int(*inputHandler[(int)StageType::STAGE_TYPE_COUNT])();
@@ -40,19 +41,19 @@ bool SetStage(StageType type)
     return initHandler[(int)currentStageType]();
 }
 
-int StateInput()
+int StageInput()
 {
 	inputHandler[(int)currentStageType]();
 	return 0;
 }
 
-int StateProcess()
+int StageProcess()
 {
 	processHandler[(int)currentStageType]();
 	return 0;
 }
 
-int StateRender()
+int StageRender()
 {
 	renderHandler[(int)currentStageType]();
 	return 0;
@@ -68,17 +69,12 @@ int StateRender()
 
 
 // Title //
-bool TitleInit()
+bool OnTitleInit()
 {
 	return true;
 }
 
-int TitleInput()
-{
-	return 0;
-}
-
-int TitleProcess()
+int OnTitleInput()
 {
 	if (GetAsyncKeyState(VK_SPACE))
 	{
@@ -92,14 +88,17 @@ int TitleProcess()
 	return 0;
 }
 
-int TitleRender()
+int OnTitleProcess()
+{
+	return 0;
+}
+
+int OnTitleRender()
 {	
 	CopyDataToRendBuffer({ 13, 2 }, "Shooting Game");
 
 	CopyDataToRendBuffer({ 12, 5 }, "------------");
-
 	CopyDataToRendBuffer({ 14, 6 }, "1. Game");
-
 	CopyDataToRendBuffer({ 12, 7 }, "------------");
 
 	return 0;
@@ -112,50 +111,26 @@ int TitleRender()
 
 
 
-
-
-// Game ///
-const int MAX_STAGE_COUNT = 100;
-
-struct StageInfo
+// Game
+bool OnGameInit()
 {
-	bool InVailed = false;
-
-	Enitiy		Monsters[MAX_MONSTER_COUNT];
-	uvector2	PlayerSpawnPoint;
-};
-
-StageInfo _stage[MAX_STAGE_COUNT];
-
-bool GameInit()
-{
-	// TODO 몬스터 정보 불러오기
-	LoadStage(&_stage, sizeof(StageInfo));
-	LoadPlayerData();
-	LoadMonsterData();
-	
-	return true;
+	return GameInit();
 }
 
-int GameInput()
+int OnGameInput()
 {
-	PlayerInput();
-
-
-	return 0;
+	return GameInput();
 }
 
-int GameProcess()
+int OnGameProcess()
 {
-	PlayerPorcess();
-	BulletProcess();
-	return 0;
+	return GameProcess();
 }
 
-int GameRender()
+int OnGameRender()
 {
-	PlayerRender();
-	BulletRender();
+	GameRender();
+	UIRender();
 	return 0;
 }
 
@@ -166,22 +141,31 @@ int GameRender()
 
 // OVER //
 
-bool OverInit()
+bool OnOverInit()
 {
 	return true;
 }
 
-int OverInput()
+int OnOverInput()
+{
+	if (GetAsyncKeyState(VK_F2))
+	{
+		if (SetStage(StageType::Game) == false)
+		{
+			__debugbreak();
+		}
+		return 0;
+	}
+	return 0;
+}
+
+int OnOverProcess()
 {
 	return 0;
 }
 
-int OverProcess()
+int OnOverRender()
 {
-	return 0;
-}
-
-int OverRender()
-{
+	CopyDataToRendBuffer({ 13, 2 }, "Game Over");
 	return 0;
 }

@@ -128,25 +128,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="FrameRate.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="GameStage.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="StringUtility.cpp" />
-    <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="UIRenderer.cpp" />
+    <ClCompile Include="DataType.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="FrameRate.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameEngine.h" />
-    <ClInclude Include="GameStage.h" />
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="StringUtility.h" />
-    <ClInclude Include="Utility.h" />
+    <ClInclude Include="UIRenderer.h" />
+    <ClInclude Include="DataType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,6 @@
 #include "GameEngine.h"
 
-#include "GameStage.h"
+#include "Stage.h"
 #include <Windows.h>
 #include "Renderer.h"
 #include "FrameRate.h"
@@ -19,23 +19,30 @@ int GameEngineStart()
 {
     while (true)
     {
-        //frame
-        ProcessFrame();
+        // logic fps check
+#ifdef _DEBUG
+        FrameProcess();
+#endif
 
         // frame Test
         if (GetAsyncKeyState(VK_F1))
         {
-            Sleep(1000);
+            Sleep(150);
         }
 
         // Process
-        StateInput();
-        StateProcess();
+        StageInput();
+        StageProcess();
 
         if (FrameSkip() == false)
         {
-            RenderFrame();
-            StateRender();
+#ifdef _DEBUG
+            // render fps check 
+            FrameRender();
+#endif
+            
+            // stage render
+            StageRender();
 
             // BUFFER ±×¸®±â
             DrawBuffer();

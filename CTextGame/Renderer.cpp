@@ -1,8 +1,7 @@
 #include "Renderer.h"
 
-#include "FrameRate.h"
-
 #include <windows.h>
+
 #include <stdio.h>
 
 char renderBuffer[RENDER_BUFFER_HEIGHT_SIZE][RENDER_BUFFER_WIDTH_SIZE] = { ' ',};
@@ -19,6 +18,8 @@ bool RendererInit()
     cursorPointerHandler = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleCursorInfo(cursorPointerHandler, &cursorInfo);
 
+    ClearBuffer();
+
     return true;
 }
 
@@ -28,17 +29,15 @@ bool ClearBuffer()
     return true;
 }
 
-
-
-bool CopyDataToRendBuffer(const uvector2 position, char render)
+bool CopyDataToRendBuffer(const vector2D<unsigned int> position, const char render)
 {
     renderBuffer[position.y][position.x] = render;
     return true;
 }
 
-bool CopyDataToRendBuffer(const uvector2 position, const char* render)
+bool CopyDataToRendBuffer(const vector2D<unsigned int> position, const char* render)
 {
-    const int copySize = strlen(render);
+    const int copySize = (const int)strlen(render);
     const int remingSize = RENDER_BUFFER_WIDTH_SIZE - copySize;
     ::memcpy_s(&renderBuffer[position.y][position.x], remingSize, (const void*) render, copySize);
     return true;
@@ -59,7 +58,7 @@ bool DrawBuffer()
 }
 
 
-void SetConsolePointer(uvector2 position)
+void SetConsolePointer(vector2D<unsigned int> position)
 {
     COORD cur;
     cur.X = position.x;
@@ -71,7 +70,7 @@ bool NullTermimation()
 {
     for (int y = 0; y < RENDER_BUFFER_HEIGHT_SIZE; y++)
     {
-        renderBuffer[y][RENDER_BUFFER_WIDTH_SIZE- 1] = '\0';
+        renderBuffer[y][RENDER_BUFFER_WIDTH_SIZE- 1] = '\n';
     }
 
     return false;

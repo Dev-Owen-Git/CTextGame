@@ -1,0 +1,5 @@
+att : 10
+hp : 30
+sleep : 1
+fireCoolTime : 800, 2000
+img : c

@@ -10,30 +10,15 @@ bool StringSlice(const char* source, T(&outData)[row][col], const char* spliceVa
 
 	char* token = strtok_s((char*)source, spliceValue, &context);
 
-	while (token != nullptr)
-	{
-		strcpy_s(outData[index++], token);
-
-		token = strtok_s(context, spliceValue, &context);
-	}
-	return true;
-}
-
-template<int srcBufferCount, int destBufferCount>
-bool StringCompare(const char (&srcBuffer) [srcBufferCount], const char (&destBuffer) [destBufferCount])
-{
-	if (srcBufferCount > destBufferCount)
+	if (token == nullptr)
 	{
 		return false;
 	}
 
-	for (int i = 0; i < srcBufferCount; i++)
+	while (token != nullptr)
 	{
-		if (srcBuffer[i] != destBuffer[i])
-		{
-			return false;
-		}
+		strcpy_s(outData[index++], token);
+		token = strtok_s(context, spliceValue, &context);
 	}
-
 	return true;
 }

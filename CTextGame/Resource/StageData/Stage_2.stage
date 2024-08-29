@@ -1,0 +1,64 @@
+monster 19
+{
+    id : 0
+    pos : 1, 2
+    moveType : 1
+    id : 1
+    pos : 5, 2
+    moveType : 0
+    id : 1
+    pos : 9, 2
+    moveType : 0
+    id : 0
+    pos : 13, 2
+    moveType : 1
+    id : 2
+    pos : 17, 2
+    moveType : 0
+    id : 2
+    pos : 21, 2
+    moveType : 0
+    id : 0
+    pos : 25, 2
+    moveType : 0
+    id : 1
+    pos : 29, 2
+    moveType : 0
+    id : 0
+    pos : 34, 2
+    moveType : 1
+    id : 2
+    pos : 38, 2
+    moveType : 0
+    id : 2
+    pos : 3, 0
+    moveType : 0
+    id : 1
+    pos : 7, 0
+    moveType : 0
+    id : 1
+    pos : 11, 0
+    moveType : 0
+    id : 0
+    pos : 15, 0
+    moveType : 1
+    id : 0
+    pos : 19, 0
+    moveType : 0
+    id : 1
+    pos : 23, 0
+    moveType : 0
+    id : 0
+    pos : 27, 0
+    moveType : 0
+    id : 1
+    pos : 31, 0
+    moveType : 0
+    id : 0
+    pos : 35, 0
+    moveType : 1
+}
+player
+{
+    pos : 20, 20
+}
