@@ -160,7 +160,7 @@ void ClearAllBullet()
 {
 	for (unsigned int bulletIndex = 0; bulletIndex < MAX_BULLET_COUNT; bulletIndex++)
 	{
-		Bullet& bullet = bullets[bulletInde x];
+		Bullet& bullet = bullets[bulletIndex];
 		bullet.IsViaild = false;
 	}
 }
