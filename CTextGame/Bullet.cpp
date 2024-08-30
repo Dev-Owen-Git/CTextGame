@@ -9,7 +9,7 @@
 #include "Renderer.h"
 
 const int MAX_BULLET_COUNT = 100;
-Bullet bullets[MAX_BULLET_COUNT];
+Bullet _bullets[MAX_BULLET_COUNT];
 
 // 총알이 이동 후 맵 밖으로 나가면 제거
 
@@ -89,7 +89,7 @@ int BulletProcess()
 	// TODO : stage monster 정보 가져오기
 	for (unsigned int bulletIndex = 0; bulletIndex < MAX_BULLET_COUNT; bulletIndex++)
 	{
-		Bullet& bullet = bullets[bulletIndex];
+		Bullet& bullet = _bullets[bulletIndex];
 
 		// 현재 활성된 총알만 체크
 		if (bullet.IsViaild == false)
@@ -117,7 +117,7 @@ int BulletRender()
 {
 	for (unsigned int bulletIndex = 0; bulletIndex < MAX_BULLET_COUNT; bulletIndex++)
 	{
-		Bullet& bullet = bullets[bulletIndex];
+		Bullet& bullet = _bullets[bulletIndex];
 
 		if (bullet.IsViaild == false)
 		{
@@ -142,7 +142,7 @@ void CreateBullet(const vector2D<unsigned int> spawnPoint, const unsigned int at
 {
 	for (unsigned int bulletIndex = 0; bulletIndex < MAX_BULLET_COUNT; bulletIndex++)
 	{
-		Bullet& bullet = bullets[bulletIndex];
+		Bullet& bullet = _bullets[bulletIndex];
 
 		if (bullet.IsViaild == false)
 		{
@@ -160,7 +160,7 @@ void ClearAllBullet()
 {
 	for (unsigned int bulletIndex = 0; bulletIndex < MAX_BULLET_COUNT; bulletIndex++)
 	{
-		Bullet& bullet = bullets[bulletIndex];
+		Bullet& bullet = _bullets[bulletIndex];
 		bullet.IsViaild = false;
 	}
 }

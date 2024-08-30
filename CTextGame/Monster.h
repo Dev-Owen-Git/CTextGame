@@ -4,7 +4,6 @@
 #include "File.h"
 #include "Bullet.h"
 
-extern MONSTER Monsters[MAX_STAGE_MONSTER_COUNT];
 extern unsigned int AliveMonsterCount;
 
 bool CreateMonster(const MONSTER_FILE_INFO& const  monsterInfo, const STAGE_MONSTER_INFO& const stageMonsterInfo);

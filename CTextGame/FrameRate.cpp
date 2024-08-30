@@ -9,8 +9,8 @@ double FixedTimeDelta;
 
 unsigned int _fps, _fpsToSeconds;
 
-unsigned short _currentFrameCount = 0, _currentRenderCount = 0;
-unsigned short _prevFrameCount = 0, _prevRenderCount = 0;
+unsigned short _currentFrameCount = 0, _currentRenderCount = 0, _skipCount = 0;
+unsigned short _prevFrameCount = 0, _prevRenderCount = 0, _prevSkipCount = 0;
 
 int _currentFrameTime, _startFrameTime, _frameSkipCount = 0;
 
@@ -39,16 +39,13 @@ void WaitforFrame()
 
     if (_fpsToSeconds >= processTime)
     {
+        _skipCount++;
         Sleep(_fpsToSeconds - processTime);
     }
     
-    if (processTime >= (_fpsToSeconds << 1))
+    if (processTime >= 1)
     {
         _frameSkipCount = (processTime / _fpsToSeconds) - 1;
-    }
-    else
-    {
-        _frameSkipCount = 0;
     }
 
     _startFrameTime += _fpsToSeconds;
@@ -66,6 +63,9 @@ int FrameProcess()
     {
         _prevFrameCount = _currentFrameCount;
         _currentFrameCount = 0;
+        
+        _prevSkipCount = _skipCount;
+        _skipCount = 0;
 
         frameRenderTime += 1000;
     }
@@ -88,11 +88,14 @@ int FrameRender()
 
     static char logicFrameBuffer[MAXWORD] = "logic fps : ";
     static char renderFrameBuffer[MAXWORD] = "render fps : ";
+    static char skipCountBuffer[MAXWORD] = "skip count : ";
 
     _itoa_s(_prevFrameCount, &logicFrameBuffer[12], MAXWORD - 12, 10);
     _itoa_s(_prevRenderCount, &renderFrameBuffer[13], MAXWORD - 13, 10);
+    _itoa_s(_prevSkipCount, &skipCountBuffer[13], MAXWORD - 13, 10);
 
     CopyDataToRendBuffer({ 45, 0 }, logicFrameBuffer);
     CopyDataToRendBuffer({ 45, 1 }, renderFrameBuffer);
+    CopyDataToRendBuffer({ 45, 2 }, skipCountBuffer);
     return 0;
 }

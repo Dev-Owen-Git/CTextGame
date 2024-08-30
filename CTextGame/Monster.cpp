@@ -8,7 +8,9 @@
 
 #include <Windows.h>
 
-MONSTER Monsters[MAX_STAGE_MONSTER_COUNT];
+const int MAX_CAN_MOVE_HEIGHT = 5;
+
+MONSTER _monsters[MAX_STAGE_MONSTER_COUNT];
 
 unsigned int AliveMonsterCount = 0;
 
@@ -20,7 +22,8 @@ void ReverseMoveDir(MONSTER* monster)
 
 bool CanMove(const MONSTER* monster, vector2D<double> nextPosition)
 {
-    if (nextPosition.x < 0 || nextPosition.x >= MAP_WITDH_SIZE - 1 || nextPosition.y < 0 || nextPosition.y >= 5)
+    // gird에 이동가능 여부 추가하기
+    if (nextPosition.x < 0 || nextPosition.x >= MAX_CAN_USE_BUFFER_SIZE || nextPosition.y < 0 || nextPosition.y >= MAX_CAN_MOVE_HEIGHT)
     {
         return false;
     }
@@ -127,7 +130,7 @@ void ClearAllMonsters()
 {
     for (int monsterIndex = 0; monsterIndex < MAX_STAGE_MONSTER_COUNT; monsterIndex++)
     {
-        MONSTER* monster = &Monsters[monsterIndex];
+        MONSTER* monster = &_monsters[monsterIndex];
         if (monster->Entity.IsVailed == true)
         {
             monster->Entity.IsVailed = false;
@@ -154,7 +157,7 @@ bool CanFire(const MONSTER& monster)
 
 void MonsterFire(unsigned short monsterIndex)
 {
-    auto& monster = Monsters[monsterIndex];
+    auto& monster = _monsters[monsterIndex];
     if (CanFire(monster) == true)
     {
         vector2D<unsigned int> bulletSpawnPoint = CastingVector2D<unsigned int>(monster.Entity.Position);
@@ -170,7 +173,7 @@ int MonsterProcess()
 {
     for (unsigned short monsterIndex = 0; monsterIndex < MAX_STAGE_MONSTER_COUNT; monsterIndex++)
     {
-        MONSTER* monster = &Monsters[monsterIndex];
+        MONSTER* monster = &_monsters[monsterIndex];
         if (monster->Entity.IsVailed == true)
         {
             MonsterMove(monster);
@@ -184,7 +187,7 @@ int MonsterRender()
 {
     for (unsigned short monsterIndex = 0; monsterIndex < MAX_STAGE_MONSTER_COUNT; monsterIndex++)
     {
-        MONSTER* monster = &Monsters[monsterIndex];
+        MONSTER* monster = &_monsters[monsterIndex];
         if (monster->Entity.IsVailed == true)
         {
             CopyDataToRendBuffer(CastingVector2D<unsigned int>(monster->Entity.Position), monster->Sprite);
@@ -217,9 +220,9 @@ MONSTER* GetUnValiedMonster()
 {
     for (unsigned short monsterIndex = 0; monsterIndex < MAX_STAGE_MONSTER_COUNT; monsterIndex++)
     {
-        if (Monsters[monsterIndex].Entity.IsVailed == false)
+        if (_monsters[monsterIndex].Entity.IsVailed == false)
         {
-            return &Monsters[monsterIndex];
+            return &_monsters[monsterIndex];
         }
     }
 
