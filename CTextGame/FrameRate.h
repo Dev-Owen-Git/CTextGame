@@ -1,6 +1,6 @@
 #pragma once
 
-extern double FixedTimeDelta;
+extern double FixedDeltaTime;
 
 void InitFrameRate(const unsigned int FPS);
 

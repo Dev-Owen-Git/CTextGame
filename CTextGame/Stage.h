@@ -30,9 +30,4 @@ int OnOverInput();
 int OnOverProcess();
 int OnOverRender();
 
-extern bool(*initHandler [(int)StageType::STAGE_TYPE_COUNT] )();
-extern int(*inputHandler[(int)StageType::STAGE_TYPE_COUNT])();
-extern int(*processHandler[(int)StageType::STAGE_TYPE_COUNT])();
-extern int(*renderHandler[(int)StageType::STAGE_TYPE_COUNT])();
-
 extern StageType currentStageType;

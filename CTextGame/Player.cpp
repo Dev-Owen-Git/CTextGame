@@ -11,40 +11,12 @@
 
 PLAYER Player;
 
-bool PlayerFireCoolDown()
-{
-	if (Player.LastFireTime + Player.FireCoolTime <= timeGetTime())
-	{
-		return true;
-	}
-	return false;
-}
+// Attack
+bool PlayerFireCoolDown();
+void FirePlayerBullet();
 
-void FirePlayerBullet()
-{
-	vector2D<unsigned int> bulletSpawnPoint = CastingVector2D<unsigned int>(Player.Entity.Position);
-	bulletSpawnPoint.y -= 1;
-
-	CreateBullet(bulletSpawnPoint, Player.Entity.Att, BULLET_CREATOR_TYPE::PLAYER);
-
-	Player.LastFireTime = timeGetTime();
-}
-
-void Move(MOVE_DIR dir)
-{
-	const vector2D<int> oldPosiiton = CastingVector2D<int>(Player.Entity.Position);
-
-	const auto moveDirX = (int)dir * (Player.Entity.Speed * FixedTimeDelta);
-	const auto nextPosition = Player.Entity.Position.x + moveDirX;
-	if (nextPosition < 0 || nextPosition >= MAP_WITDH_SIZE)
-	{
-		return;
-	}
-
-	Player.Entity.Position.x += (int)dir * (Player.Entity.Speed * FixedTimeDelta);
-
-	MoveGirdItem(oldPosiiton, CastingVector2D<int>(Player.Entity.Position), GRID_ITEM_TYPE::PLAYER);
-}
+// Move
+void Move(const vector2D<double> dir);
 
 bool PlayerInit()
 {
@@ -56,12 +28,12 @@ int PlayerInput()
 {
 	if (GetAsyncKeyState(VK_LEFT))
 	{
-		Move(MOVE_DIR::LEFT);
+		Move({1, 0});
 	}
 
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
-		Move(MOVE_DIR::RIGHT);
+		Move({ 0, -1 });
 	}
 
 	if (GetAsyncKeyState(VK_SPACE))
@@ -115,4 +87,58 @@ void LoadPlayerData(const STAGE_FILE_INFO* stageData)
 	SetGridItem(CastingVector2D<int>(Player.Entity.Position), &Player, GRID_ITEM_TYPE::PLAYER);
 
 	Player.Entity.IsVailed = true;
+}
+
+
+
+
+
+
+
+
+
+
+
+// PLAYER ATTACK
+bool PlayerFireCoolDown()
+{
+	if (Player.LastFireTime + Player.FireCoolTime <= timeGetTime())
+	{
+		return true;
+	}
+	return false;
+}
+
+void FirePlayerBullet()
+{
+	static const int FireDregree = 90;
+	static const vector2D<int> FireSpawnOffset = vector2D<int>{ 0, -1 };
+
+	// create bullet
+	const vector2D<unsigned int> bulletSpawnPoint = CastingVector2D<unsigned int>(Player.Entity.Position) + FireSpawnOffset;
+	CreateBullet(bulletSpawnPoint, FireDregree, Player.Entity.Att, BULLET_CREATOR_TYPE::PLAYER);
+
+	// reset fire
+	Player.LastFireTime = timeGetTime();
+}
+
+
+
+
+
+
+// Player Move
+void Move(const vector2D<double> dir)
+{
+	const vector2D<int>		oldPoint		= CastingVector2D<int>(Player.Entity.Position);
+	const vector2D<double>	moveDir			= dir * (Player.Entity.Speed * FixedDeltaTime);
+	const vector2D<double>	nextMovePoint	= Player.Entity.Position + moveDir;
+
+	if (nextMovePoint.x < 0 || nextMovePoint.x >= MAP_WITDH_SIZE)
+	{
+		return;
+	}
+
+	Player.Entity.Position = nextMovePoint;
+	MoveGirdItem(oldPoint, CastingVector2D<int>(Player.Entity.Position), GRID_ITEM_TYPE::PLAYER);
 }

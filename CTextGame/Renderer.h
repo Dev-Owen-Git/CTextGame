@@ -2,8 +2,6 @@
 
 #include "DataType.h"
 
-extern char renderBuffer[RENDER_BUFFER_HEIGHT_SIZE][RENDER_BUFFER_WIDTH_SIZE];
-
 bool RendererInit();
 bool ClearBuffer();
 

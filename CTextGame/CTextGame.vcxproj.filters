@@ -57,7 +57,6 @@
     <ClCompile Include="File.cpp">
       <Filter>File</Filter>
     </ClCompile>
-    <ClCompile Include="StringUtility.cpp" />
     <ClCompile Include="Monster.cpp">
       <Filter>GameStage\Game</Filter>
     </ClCompile>
@@ -75,6 +74,12 @@
     </ClCompile>
     <ClCompile Include="UIRenderer.cpp">
       <Filter>GameStage\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="StringUtility.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MathUtility.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +104,6 @@
     <ClInclude Include="File.h">
       <Filter>File</Filter>
     </ClInclude>
-    <ClInclude Include="StringUtility.h" />
     <ClInclude Include="Monster.h">
       <Filter>GameStage\Game</Filter>
     </ClInclude>
@@ -117,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="UIRenderer.h">
       <Filter>GameStage\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="StringUtility.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtility.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

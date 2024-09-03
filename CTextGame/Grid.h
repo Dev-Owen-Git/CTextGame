@@ -19,7 +19,7 @@ extern GRID Grid[MAP_HIGHT_SIZE][MAP_WITDH_SIZE];
 
 bool GridInit();
 
-void SetGridItem(const vector2D<int> gridPosition, void* item, const GRID_ITEM_TYPE type);
+void SetGridItem(const vector2D<int> gridPosition, const void* const item, const GRID_ITEM_TYPE type);
 void RemoveGridItem(const vector2D<int> gridPosition, const GRID_ITEM_TYPE type);
 void MoveGirdItem(const vector2D<int> currentPosition, const vector2D<int> nextPosition, const GRID_ITEM_TYPE type);
 

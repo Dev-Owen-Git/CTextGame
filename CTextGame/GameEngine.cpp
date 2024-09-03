@@ -4,13 +4,33 @@
 #include <Windows.h>
 #include "Renderer.h"
 #include "FrameRate.h"
+#include<time.h>
+
+#include <stdio.h>
+
+void SetWindow(const int wdith, const int hegiht)
+{
+    char windowSizeBuffer[256] = "mode con: cols=%d lines=%d";
+    sprintf_s(windowSizeBuffer, windowSizeBuffer, wdith  + 1, hegiht  + 1);
+    system(windowSizeBuffer);
+}
 
 bool GameEngineInit()
 {
+    srand((unsigned int)time(NULL));
+
+    SetWindow(RENDER_BUFFER_WIDTH_SIZE, RENDER_BUFFER_HEIGHT_SIZE);
+
     InitFrameRate(50);
 
-    StageInit();
-    RendererInit();
+    if (StageInit() == false)
+    {
+        return false;
+    }
+    if (RendererInit() == false)
+    {
+        return false;
+    }
 
     return SetStage(StageType::Title);
 }

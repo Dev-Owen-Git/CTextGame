@@ -4,9 +4,9 @@
 
 #include <stdio.h>
 
-char renderBuffer[RENDER_BUFFER_HEIGHT_SIZE][RENDER_BUFFER_WIDTH_SIZE] = { ' ',};
+char _renderBuffer[RENDER_BUFFER_HEIGHT_SIZE + 1][RENDER_BUFFER_WIDTH_SIZE + 1] = { ' ',};
 
-HANDLE cursorPointerHandler;
+HANDLE _cursorPointerHandler;
 
 bool RendererInit()
 {
@@ -15,8 +15,8 @@ bool RendererInit()
     cursorInfo.bVisible = FALSE;
     cursorInfo.dwSize = 1;
 
-    cursorPointerHandler = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleCursorInfo(cursorPointerHandler, &cursorInfo);
+    _cursorPointerHandler = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleCursorInfo(_cursorPointerHandler, &cursorInfo);
 
     ClearBuffer();
 
@@ -25,13 +25,13 @@ bool RendererInit()
 
 bool ClearBuffer()
 {
-    ::memset(renderBuffer, ' ', sizeof(renderBuffer));
+    ::memset(_renderBuffer, ' ', sizeof(_renderBuffer));
     return true;
 }
 
 bool CopyDataToRendBuffer(const vector2D<unsigned int> position, const char render)
 {
-    renderBuffer[position.y][position.x] = render;
+    _renderBuffer[position.y][position.x] = render;
     return true;
 }
 
@@ -39,7 +39,7 @@ bool CopyDataToRendBuffer(const vector2D<unsigned int> position, const char* ren
 {
     const int copySize = (const int)strlen(render);
     const int remingSize = RENDER_BUFFER_WIDTH_SIZE - copySize;
-    ::memcpy_s(&renderBuffer[position.y][position.x], remingSize, (const void*) render, copySize);
+    ::memcpy_s(&_renderBuffer[position.y][position.x], remingSize, (const void*) render, copySize);
     return true;
 }
 
@@ -47,10 +47,10 @@ bool DrawBuffer()
 {
     NullTermimation();
 
-    for (unsigned int y = 0; y < RENDER_BUFFER_HEIGHT_SIZE; y++)
+    for (unsigned int y = 0; y < RENDER_BUFFER_HEIGHT_SIZE + 1; y++)
     {
         SetConsolePointer({ 0, y });
-        printf(renderBuffer[y]);
+        printf(_renderBuffer[y]);
     }
 
     ClearBuffer();
@@ -63,14 +63,14 @@ void SetConsolePointer(vector2D<unsigned int> position)
     COORD cur;
     cur.X = position.x;
     cur.Y = position.y;
-    SetConsoleCursorPosition(cursorPointerHandler, cur);
+    SetConsoleCursorPosition(_cursorPointerHandler, cur);
 }
 
 bool NullTermimation()
 {
     for (int y = 0; y < RENDER_BUFFER_HEIGHT_SIZE; y++)
     {
-        renderBuffer[y][RENDER_BUFFER_WIDTH_SIZE- 1] = '\n';
+        _renderBuffer[y][RENDER_BUFFER_WIDTH_SIZE] = '\n';
     }
 
     return false;

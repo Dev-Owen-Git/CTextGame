@@ -6,12 +6,15 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Bullet.h"
-#include "Stage.h"
+#include "UIRenderer.h"
+
 
 STAGE_FILE_INFO _stage[MAX_STAGE_COUNT];
 MONSTER_FILE_INFO _monsterInfo[MAX_MONSTER_TYPE];
 
 int CurrentStage = 0;
+
+void CreateStage(int stage);
 
 bool GameInit()
 {
@@ -48,7 +51,20 @@ int GameRender()
 	BulletRender();
 	PlayerRender();
 	MonsterRender();
+	UIRender();
 	return 0;
+}
+
+void SetGameStage(const  int stage)
+{
+	if (_stage[stage].isVailed == false)
+	{
+		return;
+	}
+
+	CurrentStage = stage;
+
+	CreateStage(CurrentStage);
 }
 
 void CreateStage(int stage)
@@ -66,18 +82,6 @@ void CreateStage(int stage)
 
 	// Player »ý¼º
 	LoadPlayerData(&_stage[stage]);
-}
-
-void SetGameStage(const  int stage)
-{
-	if (_stage[stage].isVailed == false)
-	{
-		return;
-	}
-
-	CurrentStage = stage;
-
-	CreateStage(CurrentStage);
 }
 
 void NetGameStage()

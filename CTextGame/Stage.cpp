@@ -2,22 +2,21 @@
 #include "Renderer.h"
 #include "File.h"
 #include "Game.h"
-#include "UIRenderer.h"
 
 #include <Windows.h>
 
 // COMMON //
 
 #define AddStage(stgaeName) \
-	initHandler[(int)StageType::##stgaeName]		= On##stgaeName##Init;		\
-	inputHandler[(int)StageType::##stgaeName]		= On##stgaeName##Input;		\
-	processHandler[(int)StageType::##stgaeName]		= On##stgaeName##Process;		\
-	renderHandler[(int)StageType::##stgaeName]		= On##stgaeName##Render
+	_initHandler[(int)StageType::##stgaeName]		= On##stgaeName##Init;			\
+	_inputHandler[(int)StageType::##stgaeName]		= On##stgaeName##Input;			\
+	_processHandler[(int)StageType::##stgaeName]	= On##stgaeName##Process;		\
+	_renderHandler[(int)StageType::##stgaeName]		= On##stgaeName##Render
 
-bool(*initHandler[(int)StageType::STAGE_TYPE_COUNT])();
-int(*inputHandler[(int)StageType::STAGE_TYPE_COUNT])();
-int(*processHandler[(int)StageType::STAGE_TYPE_COUNT])();
-int(*renderHandler[(int)StageType::STAGE_TYPE_COUNT])();
+bool(*_initHandler[(int)StageType::STAGE_TYPE_COUNT])();
+int(*_inputHandler[(int)StageType::STAGE_TYPE_COUNT])();
+int(*_processHandler[(int)StageType::STAGE_TYPE_COUNT])();
+int(*_renderHandler[(int)StageType::STAGE_TYPE_COUNT])();
 
 StageType currentStageType;
 
@@ -38,24 +37,24 @@ bool SetStage(StageType type)
 	}
 
 	currentStageType = type;
-    return initHandler[(int)currentStageType]();
+    return _initHandler[(int)currentStageType]();
 }
 
 int StageInput()
 {
-	inputHandler[(int)currentStageType]();
+	_inputHandler[(int)currentStageType]();
 	return 0;
 }
 
 int StageProcess()
 {
-	processHandler[(int)currentStageType]();
+	_processHandler[(int)currentStageType]();
 	return 0;
 }
 
 int StageRender()
 {
-	renderHandler[(int)currentStageType]();
+	_renderHandler[(int)currentStageType]();
 	return 0;
 }
 
@@ -76,7 +75,7 @@ bool OnTitleInit()
 
 int OnTitleInput()
 {
-	if (GetAsyncKeyState(VK_SPACE))
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
 		if (SetStage(StageType::Game) == false)
 		{
@@ -97,9 +96,7 @@ int OnTitleRender()
 {	
 	CopyDataToRendBuffer({ 13, 2 }, "Shooting Game");
 
-	CopyDataToRendBuffer({ 12, 5 }, "------------");
-	CopyDataToRendBuffer({ 14, 6 }, "1. Game");
-	CopyDataToRendBuffer({ 12, 7 }, "------------");
+	CopyDataToRendBuffer({ 13, 6 }, "Press To Space");
 
 	return 0;
 }
@@ -130,7 +127,6 @@ int OnGameProcess()
 int OnGameRender()
 {
 	GameRender();
-	UIRender();
 	return 0;
 }
 
@@ -148,7 +144,7 @@ bool OnOverInit()
 
 int OnOverInput()
 {
-	if (GetAsyncKeyState(VK_F2))
+	if (GetAsyncKeyState(VK_F1))
 	{
 		if (SetStage(StageType::Game) == false)
 		{

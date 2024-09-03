@@ -5,7 +5,7 @@
 #pragma comment(lib, "Winmm.lib")
 
 
-double FixedTimeDelta;
+double FixedDeltaTime;
 
 unsigned int _fps, _fpsToSeconds;
 
@@ -18,7 +18,7 @@ void InitFrameRate(const unsigned int fps)
 {
     _fps = fps;
     _fpsToSeconds = 1000 / _fps;
-    FixedTimeDelta = 1.0f / _fps;
+    FixedDeltaTime = 1.0f / _fps;
 
     _currentFrameTime = timeGetTime();
     _startFrameTime = timeGetTime();
@@ -61,11 +61,17 @@ int FrameProcess()
 
     if (timeGetTime() - frameRenderTime >= 1000)
     {
+        // frame count
         _prevFrameCount = _currentFrameCount;
         _currentFrameCount = 0;
         
+        // skip count
         _prevSkipCount = _skipCount;
         _skipCount = 0;
+
+        // render count
+        _prevRenderCount = _currentRenderCount;
+        _currentRenderCount = 0;
 
         frameRenderTime += 1000;
     }
@@ -75,16 +81,6 @@ int FrameProcess()
 int FrameRender()
 {
     _currentRenderCount++;
-
-    static unsigned int frameRenderTime = timeGetTime();
-
-    if (timeGetTime() - frameRenderTime >= 1000)
-    {
-        _prevRenderCount = _currentRenderCount;
-        _currentRenderCount = 0;
-
-        frameRenderTime += 1000;
-    }
 
     static char logicFrameBuffer[MAXWORD] = "logic fps : ";
     static char renderFrameBuffer[MAXWORD] = "render fps : ";

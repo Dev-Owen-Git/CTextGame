@@ -10,6 +10,7 @@ struct Bullet
 	unsigned int Att;
 	double Speed;
 
+	vector2D<double> moveDir;
 	vector2D<double> Position;
 };
 
@@ -20,9 +21,8 @@ enum class BULLET_CREATOR_TYPE
 };
 
 bool BulletInit();
-
 int BulletProcess();
 int BulletRender();
 
-void CreateBullet(const vector2D<unsigned int> spawnPoint, const unsigned int attDamage, const BULLET_CREATOR_TYPE type);
+void CreateBullet(const vector2D<unsigned int> spawnPoint, const int degree, const unsigned int attDamage, const BULLET_CREATOR_TYPE type);
 void ClearAllBullet();

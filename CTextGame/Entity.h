@@ -2,12 +2,6 @@
 
 #include "DataType.h"
 
-enum class MOVE_DIR
-{
-	LEFT = -1,
-	RIGHT = 1,
-};
-
 struct ENTITY
 {
 	bool IsVailed = false;

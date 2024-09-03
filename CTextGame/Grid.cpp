@@ -7,11 +7,10 @@ GRID Grid[MAP_HIGHT_SIZE][MAP_WITDH_SIZE];
 bool GridInit()
 {
 	::memset(Grid, 0, sizeof(Grid));
-
 	return true;
 }
 
-void SetGridItem(const vector2D<int> gridPosition, void* item, const GRID_ITEM_TYPE type)
+void SetGridItem(const vector2D<int> gridPosition, const void* const item, const GRID_ITEM_TYPE type)
 {
 	switch (type)
 	{

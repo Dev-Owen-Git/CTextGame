@@ -5,78 +5,19 @@
 #include "Player.h"
 #include "Monster.h"
 #include "FrameRate.h"
+#include "MathUtility.h"
 
 #include "Renderer.h"
+#include "DataType.h"
 
 const int MAX_BULLET_COUNT = 100;
 Bullet _bullets[MAX_BULLET_COUNT];
 
-// 총알이 이동 후 맵 밖으로 나가면 제거
 
-void PlayerBulletMove(Bullet* const bullet)
-{
-	static int moveYDir = -1;
-	bullet->Position.y += moveYDir * (bullet->Speed * FixedTimeDelta);
-
-	if (bullet->Position.y < 0.0f)
-	{
-		bullet->IsViaild = false;
-	}
-}
-
-void MonsterBulletMove(Bullet* const bullet)
-{
-	static int moveYDir = 1;
-	bullet->Position.y += moveYDir * (bullet->Speed * FixedTimeDelta);
-
-	if (bullet->Position.y >= MAP_HIGHT_SIZE)
-	{
-		bullet->IsViaild = false;
-	}
-}
-
-void BulletMove(Bullet* const bullet)
-{
-	if (bullet->IsEmemy == true)
-	{
-		MonsterBulletMove(bullet);
-	}
-	else
-	{
-		PlayerBulletMove(bullet);
-	}
-}
-
-void BulletHit(ENTITY* const entity, const Bullet* const bullet, const GRID_ITEM_TYPE gridType)
-{
-	switch (gridType)
-	{
-	case GRID_ITEM_TYPE::PLAYER:
-		PlayerHit(entity, bullet->Att);
-		break;
-	case GRID_ITEM_TYPE::MONSTER:
-		MonsterHit(entity, bullet, bullet->Att);
-		break;
-	default:
-		break;
-	}
-}
-
-bool BulletCollsion(const Bullet& const bullet, ENTITY** outEntity, GRID_ITEM_TYPE* outEntityType)
-{
-	if (bullet.IsEmemy == true)
-	{
-		(*outEntity) = (ENTITY*)GetGridItem(CastingVector2D<int>(bullet.Position), GRID_ITEM_TYPE::PLAYER);
-		(*outEntityType) = GRID_ITEM_TYPE::PLAYER;
-	}
-	else
-	{
-		(*outEntity) = (ENTITY*)GetGridItem(CastingVector2D<int>(bullet.Position), GRID_ITEM_TYPE::MONSTER);
-		(*outEntityType) = GRID_ITEM_TYPE::MONSTER;
-	}
-
-	return (*outEntity) != nullptr;
-}
+void BulletMove(vector2D<double> moveDir, Bullet* const bullet);
+void BulletMoveProcess(Bullet* const bullet);
+void BulletHit(ENTITY* const entity, Bullet* const bullet, const GRID_ITEM_TYPE gridType);
+bool BulletCollsion(const Bullet&  bullet, ENTITY** outEntity, GRID_ITEM_TYPE* outEntityType);
 
 bool BulletInit()
 {
@@ -97,17 +38,16 @@ int BulletProcess()
 			continue;
 		}
 
-		// 몬스터 충돌처리
-		ENTITY* entity = nullptr;
+		// 총알 충돌 처리
+		ENTITY*  entity = nullptr;
 		GRID_ITEM_TYPE entityType;
 		if (BulletCollsion(bullet, &entity, &entityType) == true)
 		{
    			BulletHit(entity,  &bullet, entityType);
-
-			bullet.IsViaild = false;
 		}
 
-		BulletMove(&bullet);
+		// 총알 이동
+		BulletMoveProcess(&bullet);
 	}
 
     return 0;
@@ -138,7 +78,7 @@ int BulletRender()
     return 0;
 }
 
-void CreateBullet(const vector2D<unsigned int> spawnPoint, const unsigned int attDamage, const BULLET_CREATOR_TYPE type)
+void CreateBullet(const vector2D<unsigned int> spawnPoint, const int degree, const unsigned int attDamage, const BULLET_CREATOR_TYPE type)
 {
 	for (unsigned int bulletIndex = 0; bulletIndex < MAX_BULLET_COUNT; bulletIndex++)
 	{
@@ -148,6 +88,7 @@ void CreateBullet(const vector2D<unsigned int> spawnPoint, const unsigned int at
 		{
 			bullet.Position = CastingVector2D<double>(spawnPoint);
 			bullet.Att = attDamage;
+			bullet.moveDir = GetNormalizeDiraction<double>(degree);
 			bullet.Speed = 20;
 			bullet.IsEmemy = (type == BULLET_CREATOR_TYPE::MONSTER);
 			bullet.IsViaild = true;
@@ -163,4 +104,61 @@ void ClearAllBullet()
 		Bullet& bullet = _bullets[bulletIndex];
 		bullet.IsViaild = false;
 	}
+}
+
+void BulletMove(vector2D<double> moveDir, Bullet* const bullet)
+{
+	const vector2D<double> nextPosition = moveDir * (bullet->Speed * FixedDeltaTime);
+	bullet->Position += nextPosition;
+
+	if (bullet->Position.y >= MAP_HIGHT_SIZE || bullet->Position.y < 0)
+	{
+		bullet->IsViaild = false;
+	}
+}
+
+void BulletMoveProcess(Bullet* const bullet)
+{
+	if (bullet->IsEmemy == true)
+	{
+		BulletMove({0, 1.0f}, bullet);
+	}
+	else
+	{
+		BulletMove({ 0, -1.0f }, bullet);
+	}
+}
+
+void BulletHit(ENTITY* const entity, Bullet* const bullet, const GRID_ITEM_TYPE gridType)
+{
+	switch (gridType)
+	{
+	case GRID_ITEM_TYPE::PLAYER:
+		PlayerHit(entity, bullet->Att);
+		break;
+	case GRID_ITEM_TYPE::MONSTER:
+		MonsterHit(entity, bullet->Att);
+		break;
+	default:
+		break;
+	}
+
+	// 추후 특정 총알은 관통이 가능할 시 이부분에 대해서 함수 로직 개발
+	bullet->IsViaild = false;
+}
+
+bool BulletCollsion(const Bullet&  bullet, ENTITY** outEntity, GRID_ITEM_TYPE* outEntityType)
+{
+	if (bullet.IsEmemy == true)
+	{
+		(*outEntity) = (ENTITY*)GetGridItem(CastingVector2D<int>(bullet.Position), GRID_ITEM_TYPE::PLAYER);
+		(*outEntityType) = GRID_ITEM_TYPE::PLAYER;
+	}
+	else
+	{
+		(*outEntity) = (ENTITY*)GetGridItem(CastingVector2D<int>(bullet.Position), GRID_ITEM_TYPE::MONSTER);
+		(*outEntityType) = GRID_ITEM_TYPE::MONSTER;
+	}
+
+	return (*outEntity) != nullptr;
 }
