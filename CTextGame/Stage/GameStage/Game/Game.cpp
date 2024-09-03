@@ -1,12 +1,12 @@
 #include "Game.h"
 
-#include "File.h"
+#include <File/File.h>
 
-#include "Grid.h"
-#include "Player.h"
-#include "Monster.h"
-#include "Bullet.h"
-#include "UIRenderer.h"
+#include <Stage/GameStage/Game/Grid/Grid.h>
+#include <Stage/GameStage/Game/Player/Player.h>
+#include <Stage/GameStage/Game/Monster/Monster.h>
+#include <Stage/GameStage/Game/Bullet/Bullet.h>
+#include <Stage/GameStage/Game/Ui/GameUIRenderer.h>
 
 
 STAGE_FILE_INFO _stage[MAX_STAGE_COUNT];

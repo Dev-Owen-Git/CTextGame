@@ -1,11 +1,11 @@
-#include "UIRenderer.h"
+#include "GameUIRenderer.h"
 
-#include "Player.h"
-#include "Monster.h"
-#include "Renderer.h"
-#include "Game.h"
+#include <Stage/GameStage/Game/Player/Player.h>
+#include <Stage/GameStage/Game/Monster/Monster.h>
+#include <Stage/GameStage/Game/Game.h>
+#include <Renderer/Renderer.h>
 
-#include <stdio.h>
+#include <cstdio>
 
 void UIRender()
 {

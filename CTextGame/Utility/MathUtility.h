@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DataType.h"
+#include <Data/DataType.h>
 static const double PI = 3.141592;
 
 static double Degree2Radian(int degree)

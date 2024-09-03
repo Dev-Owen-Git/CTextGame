@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Entity.h"
-#include "DataType.h"
+#include <Stage/GameStage/Game/Entity/Entity.h>
+#include <Data/DataType.h>
 
 struct GRID
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DataType.h"
+#include <Data/DataType.h>
 
 struct STAGE_MONSTER_INFO
 {

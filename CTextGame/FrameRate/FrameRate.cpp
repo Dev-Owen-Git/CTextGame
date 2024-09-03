@@ -1,6 +1,7 @@
 #include "FrameRate.h"
 
-#include "Renderer.h"
+#include <Renderer/Renderer.h>
+
 #include <Windows.h>
 #pragma comment(lib, "Winmm.lib")
 

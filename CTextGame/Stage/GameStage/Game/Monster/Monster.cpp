@@ -1,10 +1,12 @@
 #include "Monster.h"
 
-#include "Renderer.h"
-#include "Grid.h"
-#include "Bullet.h"
-#include "Game.h"
-#include "FrameRate.h"
+#include <Stage/GameStage/Game/Grid/Grid.h>
+#include <Stage/GameStage/Game/Bullet/Bullet.h>
+#include <Stage/GameStage/Game/Game.h>
+
+#include <FrameRate/FrameRate.h>
+
+#include <Renderer/Renderer.h>
 
 #include <Windows.h>
 

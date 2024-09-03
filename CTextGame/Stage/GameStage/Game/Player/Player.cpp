@@ -1,11 +1,14 @@
 #include "Player.h"
 
-#include "Stage.h"
-#include "Renderer.h"
-#include "Bullet.h"
-#include "Grid.h"
-#include "FrameRate.h"
-#include "DataType.h"
+#include <Stage/Stage.h>
+#include <Stage/GameStage/Game/Bullet/Bullet.h>
+#include <Stage/GameStage/Game/Grid/Grid.h>
+
+#include <Renderer/Renderer.h>
+
+#include <FrameRate/FrameRate.h>
+
+#include <Data/DataType.h>
 
 #include <Windows.h>
 

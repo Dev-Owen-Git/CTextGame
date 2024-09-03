@@ -1,7 +1,8 @@
 #include "Stage.h"
-#include "Renderer.h"
-#include "File.h"
-#include "Game.h"
+
+#include <Renderer/Renderer.h>
+
+#include <Stage/GameStage/Game/Game.h>
 
 #include <Windows.h>
 

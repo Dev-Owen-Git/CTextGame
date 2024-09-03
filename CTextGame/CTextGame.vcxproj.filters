@@ -7,126 +7,138 @@
     <Filter Include="GameEngine">
       <UniqueIdentifier>{7bac74fa-1f81-4a83-94a5-cbe94d7cf3c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStage">
-      <UniqueIdentifier>{8572d3d7-b22d-4b05-b7f6-1ec8bb683085}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{a5f5c314-d84d-4397-9c06-09b79011e268}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameStage\Game">
-      <UniqueIdentifier>{fc8bc0a3-8553-4684-8922-b808571b5335}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{69b0c1c9-cb4d-4469-8e3a-440ae9905819}</UniqueIdentifier>
     </Filter>
     <Filter Include="File">
       <UniqueIdentifier>{a676921e-0ceb-48df-9147-ddca788bb921}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStage\Entity">
+    <Filter Include="Stage">
+      <UniqueIdentifier>{be36e9d9-4ffd-4179-b6ab-94c9690e3c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\GameStage">
+      <UniqueIdentifier>{8572d3d7-b22d-4b05-b7f6-1ec8bb683085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\GameStage\Game">
+      <UniqueIdentifier>{fc8bc0a3-8553-4684-8922-b808571b5335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\GameStage\Game\UI">
+      <UniqueIdentifier>{429ae017-26fa-434b-acf5-10956150c5d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\GameStage\Game\Bullet">
+      <UniqueIdentifier>{8c55b2a2-1af2-4120-b581-78b45abfa4d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\GameStage\Game\Player">
+      <UniqueIdentifier>{c3a6e392-0ce8-419f-ade1-5df3c120a627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\GameStage\Game\Monster">
+      <UniqueIdentifier>{970b3d3d-167e-447d-a905-983d0df9cbcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage\GameStage\Game\Entity">
       <UniqueIdentifier>{5330b72c-99d3-4545-9dde-c422e6554f90}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStage\Grid">
+    <Filter Include="Stage\GameStage\Game\Grid">
       <UniqueIdentifier>{62e6f14d-f6a3-4a85-a81a-447bfabf377a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStage\Game\UI">
-      <UniqueIdentifier>{429ae017-26fa-434b-acf5-10956150c5d4}</UniqueIdentifier>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{69b0c1c9-cb4d-4469-8e3a-440ae9905819}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngine.cpp">
+    <ClCompile Include="Engine\GameEngine.cpp">
       <Filter>GameEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Stage.cpp">
-      <Filter>GameStage</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
+    <ClCompile Include="Renderer\Renderer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>GameStage\Game</Filter>
+    <ClCompile Include="Stage\GameStage\Game\Game.cpp">
+      <Filter>Stage\GameStage\Game</Filter>
     </ClCompile>
-    <ClCompile Include="DataType.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="Data\DataType.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
-    <ClCompile Include="FrameRate.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="FrameRate\FrameRate.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
-    <ClCompile Include="File.cpp">
+    <ClCompile Include="File\File.cpp">
       <Filter>File</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>GameStage\Game</Filter>
+    <ClCompile Include="Stage\GameStage\Game\Entity\Entity.cpp">
+      <Filter>Stage\GameStage\Game\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>GameStage\Game</Filter>
+    <ClCompile Include="Stage\GameStage\Game\Grid\Grid.cpp">
+      <Filter>Stage\GameStage\Game\Grid</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>GameStage\Entity</Filter>
+    <ClCompile Include="Stage\GameStage\Game\Ui\GameUIRenderer.cpp">
+      <Filter>Stage\GameStage\Game\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>GameStage\Game</Filter>
+    <ClCompile Include="Utility\StringUtility.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>GameStage\Grid</Filter>
+    <ClCompile Include="Utility\MathUtility.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
-    <ClCompile Include="UIRenderer.cpp">
-      <Filter>GameStage\Game\UI</Filter>
+    <ClCompile Include="Stage\Stage.cpp">
+      <Filter>Stage</Filter>
     </ClCompile>
-    <ClCompile Include="StringUtility.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="Stage\GameStage\Game\Bullet\Bullet.cpp">
+      <Filter>Stage\GameStage\Game\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="MathUtility.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="Stage\GameStage\Game\Monster\Monster.cpp">
+      <Filter>Stage\GameStage\Game\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\GameStage\Game\Player\Player.cpp">
+      <Filter>Stage\GameStage\Game\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameEngine.h">
+    <ClInclude Include="Engine\GameEngine.h">
       <Filter>GameEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Stage.h">
-      <Filter>GameStage</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
+    <ClInclude Include="Renderer\Renderer.h">
       <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>GameStage\Game</Filter>
+    <ClInclude Include="Stage\GameStage\Game\Game.h">
+      <Filter>Stage\GameStage\Game</Filter>
     </ClInclude>
-    <ClInclude Include="DataType.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="Data\DataType.h">
+      <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="FrameRate.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="FrameRate\FrameRate.h">
+      <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="File.h">
+    <ClInclude Include="File\File.h">
       <Filter>File</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>GameStage\Game</Filter>
+    <ClInclude Include="Stage\GameStage\Game\Entity\Entity.h">
+      <Filter>Stage\GameStage\Game\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>GameStage\Game</Filter>
+    <ClInclude Include="Stage\GameStage\Game\Grid\Grid.h">
+      <Filter>Stage\GameStage\Game\Grid</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>GameStage\Entity</Filter>
+    <ClInclude Include="Stage\GameStage\Game\Ui\GameUIRenderer.h">
+      <Filter>Stage\GameStage\Game\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>GameStage\Game</Filter>
+    <ClInclude Include="Utility\StringUtility.h">
+      <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Grid.h">
-      <Filter>GameStage\Grid</Filter>
+    <ClInclude Include="Utility\MathUtility.h">
+      <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="UIRenderer.h">
-      <Filter>GameStage\Game\UI</Filter>
+    <ClInclude Include="Stage\Stage.h">
+      <Filter>Stage</Filter>
     </ClInclude>
-    <ClInclude Include="StringUtility.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="Stage\GameStage\Game\Bullet\Bullet.h">
+      <Filter>Stage\GameStage\Game\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="MathUtility.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="Stage\GameStage\Game\Monster\Monster.h">
+      <Filter>Stage\GameStage\Game\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\GameStage\Game\Player\Player.h">
+      <Filter>Stage\GameStage\Game\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

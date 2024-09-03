@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Entity.h"
-#include "File.h"
-#include "Bullet.h"
+#include <Stage/GameStage/Game/Entity/Entity.h>
+#include "File/File.h"
 
 extern unsigned int AliveMonsterCount;
 

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "GameEngine.h"
+#include <Engine/GameEngine.h>
 
 int main()
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Entity.h"
-#include "File.h"
+#include <Stage/GameStage/Game/Entity/Entity.h>
+#include "File/File.h"
 
 extern PLAYER Player;
 

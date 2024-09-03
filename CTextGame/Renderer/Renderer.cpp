@@ -47,7 +47,7 @@ bool DrawBuffer()
 {
     NullTermimation();
 
-    for (unsigned int y = 0; y < RENDER_BUFFER_HEIGHT_SIZE + 1; y++)
+    for (unsigned short y = 0; y < RENDER_BUFFER_HEIGHT_SIZE + 1; y++)
     {
         SetConsolePointer({ 0, y });
         printf(_renderBuffer[y]);
@@ -58,7 +58,7 @@ bool DrawBuffer()
 }
 
 
-void SetConsolePointer(vector2D<unsigned int> position)
+void SetConsolePointer(vector2D<unsigned short> position)
 {
     COORD cur;
     cur.X = position.x;
