@@ -145,7 +145,7 @@ bool OnOverInit()
 
 int OnOverInput()
 {
-	if (GetAsyncKeyState(VK_F1))
+	if (GetAsyncKeyState(VK_F2))
 	{
 		if (SetStage(StageType::Game) == false)
 		{
