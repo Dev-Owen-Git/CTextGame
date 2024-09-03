@@ -1,6 +1,9 @@
 #pragma once
 
-#include <Data/DataType.h>
+#include <Data/Vector2D/Vector2D.h>
+
+#include <cmath>
+
 static const double PI = 3.141592;
 
 static double Degree2Radian(int degree)

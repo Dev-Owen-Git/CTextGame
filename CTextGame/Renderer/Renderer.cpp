@@ -1,8 +1,9 @@
 #include "Renderer.h"
 
-#include <windows.h>
+#include <Data/GlobalData.h>
 
-#include <stdio.h>
+#include <windows.h>
+#include <cstdio>
 
 char _renderBuffer[RENDER_BUFFER_HEIGHT_SIZE + 1][RENDER_BUFFER_WIDTH_SIZE + 1] = { ' ',};
 

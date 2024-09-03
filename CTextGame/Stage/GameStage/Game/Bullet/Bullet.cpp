@@ -10,7 +10,7 @@
 #include <Utility/MathUtility.h>
 
 #include <Renderer/Renderer.h>
-#include <Data/DataType.h>
+#include <Data/Vector2D/Vector2D.h>
 
 const int MAX_BULLET_COUNT = 100;
 Bullet _bullets[MAX_BULLET_COUNT];

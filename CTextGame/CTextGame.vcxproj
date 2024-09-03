@@ -163,7 +163,8 @@
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Utility\StringUtility.cpp" />
     <ClCompile Include="Stage\GameStage\Game\Ui\GameUIRenderer.cpp" />
-    <ClCompile Include="Data\DataType.cpp" />
+    <ClCompile Include="Data\GlobalData.cpp" />
+    <ClCompile Include="Data\Vector2D\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage\GameStage\Game\Bullet\Bullet.h" />
@@ -180,7 +181,8 @@
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Utility\StringUtility.h" />
     <ClInclude Include="Stage\GameStage\Game\Ui\GameUIRenderer.h" />
-    <ClInclude Include="Data\DataType.h" />
+    <ClInclude Include="Data\GlobalData.h" />
+    <ClInclude Include="Data\Vector2D\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,13 +3,15 @@
 #include <Stage/Stage.h>
 #include <Renderer/Renderer.h>
 #include <FrameRate/FrameRate.h>
+#include <Data/GlobalData.h>
 
 #include <ctime>
 #include <cstdio>
 #include <Windows.h>
 
 void SetWindow(const int wdith, const int hegiht)
-{
+{   
+    // 창 크기 조절이 안됌
     char windowSizeBuffer[256] = "mode con: cols=%d lines=%d";
     sprintf_s(windowSizeBuffer, windowSizeBuffer, wdith  + 10, hegiht  + 10);
     system(windowSizeBuffer);

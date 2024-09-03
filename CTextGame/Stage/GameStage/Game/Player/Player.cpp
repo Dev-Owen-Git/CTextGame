@@ -8,7 +8,7 @@
 
 #include <FrameRate/FrameRate.h>
 
-#include <Data/DataType.h>
+#include <Data/Vector2D/Vector2D.h>
 
 #include <Windows.h>
 
@@ -31,12 +31,14 @@ int PlayerInput()
 {
 	if (GetAsyncKeyState(VK_LEFT))
 	{
-		Move({1, 0});
+		static const vector2D<double> LeftMoveDir = { -1, 0 };
+		Move(LeftMoveDir);
 	}
 
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
-		Move({ 0, -1 });
+		static const vector2D<double> RightMoveDir = { 1, 0 };
+		Move(RightMoveDir);
 	}
 
 	if (GetAsyncKeyState(VK_SPACE))
