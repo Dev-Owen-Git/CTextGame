@@ -116,7 +116,7 @@ bool PlayerFireCoolDown()
 
 void FirePlayerBullet()
 {
-	static const int FireDregree = 90;
+	static const int FireDregree = 270;
 	static const vector2D<int> FireSpawnOffset = vector2D<int>{ 0, -1 };
 
 	// create bullet

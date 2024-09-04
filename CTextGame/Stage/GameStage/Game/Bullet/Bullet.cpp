@@ -16,7 +16,7 @@ const int MAX_BULLET_COUNT = 100;
 Bullet _bullets[MAX_BULLET_COUNT];
 
 
-void BulletMove(const vector2D<double> moveDir, Bullet* const bullet);
+void BulletMove(Bullet* const bullet);
 void BulletMoveProcess(Bullet* const bullet);
 void BulletHit(ENTITY* const entity, Bullet* const bullet, const GRID_ITEM_TYPE gridType);
 bool BulletCollsion(const Bullet&  bullet, ENTITY** outEntity, GRID_ITEM_TYPE* outEntityType);
@@ -108,9 +108,9 @@ void ClearAllBullet()
 	}
 }
 
-void BulletMove(const vector2D<double> moveDir, Bullet* const bullet)
+void BulletMove(Bullet* const bullet)
 {
-	const vector2D<double> nextPosition = moveDir * (bullet->Speed * FixedDeltaTime);
+	const vector2D<double> nextPosition = bullet->moveDir * (bullet->Speed * FixedDeltaTime);
 	bullet->Position += nextPosition;
 
 	if (bullet->Position.y >= MAP_HIGHT_SIZE || bullet->Position.y < 0)
@@ -123,11 +123,11 @@ void BulletMoveProcess(Bullet* const bullet)
 {
 	if (bullet->IsEmemy == true)
 	{
-		BulletMove({0, 1.0f}, bullet);
+		BulletMove(bullet);
 	}
 	else
 	{
-		BulletMove({ 0, -1.0f }, bullet);
+		BulletMove(bullet);
 	}
 }
 

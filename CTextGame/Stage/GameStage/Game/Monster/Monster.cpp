@@ -51,10 +51,10 @@ int MonsterRender()
 {
     for (unsigned short monsterIndex = 0; monsterIndex < MAX_STAGE_MONSTER_COUNT; monsterIndex++)
     {
-        MONSTER* monster = &_monsters[monsterIndex];
-        if (monster->Entity.IsVailed == true)
+        const MONSTER& monster = _monsters[monsterIndex];
+        if (monster.Entity.IsVailed == true)
         {
-            CopyDataToRendBuffer(CastingVector2D<unsigned int>(monster->Entity.Position), monster->Sprite);
+            CopyDataToRendBuffer(CastingVector2D<unsigned int>(monster.Entity.Position), monster.Sprite);
         }
     }
 
@@ -63,17 +63,25 @@ int MonsterRender()
 
 bool CreateMonster(const MONSTER_FILE_INFO& monsterInfo, const STAGE_MONSTER_INFO& stageMonsterInfo)
 {
-    MONSTER* monster = GetUnValiedMonster();
-    monster->Entity.Position = stageMonsterInfo.Position;
+    MONSTER* const monster = GetUnValiedMonster();
+
+    // 이부분 깔끔하게 변경하면 좋을듯
+
+    // entity
     monster->Entity.Hp = monsterInfo.Hp;
     monster->Entity.Att = monsterInfo.Att;
     monster->Entity.Speed = monsterInfo.Speed;
+    monster->Entity.Position = stageMonsterInfo.Position;
 
+    // move
+    monster->MoveType = stageMonsterInfo.MoveType;
+
+    // attack
     monster->FireCoolTime = monsterInfo.FireCoolTime;
     monster->FireCoolTimeRange = monsterInfo.FireCoolTimeRange;
     monster->LastFireTime = timeGetTime() + (rand() % monster->FireCoolTimeRange);
 
-    monster->MoveType = stageMonsterInfo.MoveType;
+    // sprite
     monster->Sprite = monsterInfo.Sprite;
 
     SetGridItem(CastingVector2D<int>(monster->Entity.Position), &monster->Entity, GRID_ITEM_TYPE::MONSTER);
@@ -88,10 +96,10 @@ void ClearAllMonsters()
 {
     for (int monsterIndex = 0; monsterIndex < MAX_STAGE_MONSTER_COUNT; monsterIndex++)
     {
-        MONSTER* monster = &_monsters[monsterIndex];
-        if (monster->Entity.IsVailed == true)
+        MONSTER& monster = _monsters[monsterIndex];
+        if (monster.Entity.IsVailed == true)
         {
-            monster->Entity.IsVailed = false;
+            monster.Entity.IsVailed = false;
         }
     }
 
@@ -150,7 +158,7 @@ bool CanMove(const MONSTER* const monster, const vector2D<double> nextPosition)
         return false;
     }
 
-    MONSTER* pMonster = (MONSTER*)GetGridItem(CastingVector2D<int>(nextPosition), GRID_ITEM_TYPE::MONSTER);
+    const MONSTER* const pMonster = (MONSTER*)GetGridItem(CastingVector2D<int>(nextPosition), GRID_ITEM_TYPE::MONSTER);
     if (pMonster == nullptr || pMonster == monster)
     {
         return true;
@@ -176,16 +184,14 @@ void MonsterMove(MONSTER* const monster)
 
 void MonsterMoveType_1(MONSTER* const monster)
 {
-    vector2D<double> currentPosition = monster->Entity.Position;
-
-    vector2D<double> nextPosition = currentPosition;
-    nextPosition.x += monster->MoveDir.x * (monster->Entity.Speed * FixedDeltaTime);
+    const vector2D<double> currentPoint = monster->Entity.Position;
+    const vector2D<double> nextPoint = currentPoint + (monster->MoveDir * (monster->Entity.Speed * FixedDeltaTime));
 
     // 이동하려는 곳에 몬스터가 없음
-    if (CanMove(monster, nextPosition) == true)
+    if (CanMove(monster, nextPoint) == true)
     {
-        monster->Entity.Position = nextPosition;
-        MoveGirdItem(CastingVector2D<int>(currentPosition), CastingVector2D<int>(nextPosition), GRID_ITEM_TYPE::MONSTER);
+        monster->Entity.Position = nextPoint;
+        MoveGirdItem(CastingVector2D<int>(currentPoint), CastingVector2D<int>(nextPoint), GRID_ITEM_TYPE::MONSTER);
     }
     else
     {
@@ -195,24 +201,25 @@ void MonsterMoveType_1(MONSTER* const monster)
 
 void MonsterMoveType_2(MONSTER* const monster)
 {
-    vector2D currentPosition = monster->Entity.Position;
+    const vector2D<double> currentPoint = monster->Entity.Position;
 
-    vector2D nextPosition = currentPosition;
-    nextPosition.x += monster->MoveDir.x * (monster->Entity.Speed * FixedDeltaTime);
+    // 다음 이동 방향 설정
+    vector2D<double> moveDir = monster->MoveDir;
 
-
+    // y축 랜덤
     if (rand() % 10 >= 4)
     {
         static short moveYDir[2] = { -1, 1 };
-        auto randValue = (rand() % 2);
-        nextPosition.y += moveYDir[randValue] * (monster->Entity.Speed * FixedDeltaTime);
+        const int randValue = rand() % 2;
+        moveDir.y = moveYDir[randValue];
     }
 
+    const vector2D<double> nextPoint = currentPoint + (moveDir * (monster->Entity.Speed * FixedDeltaTime));
     // 이동하려는 곳에 몬스터가 없음
-    if (CanMove(monster, nextPosition) == true)
+    if (CanMove(monster, nextPoint) == true)
     {
-        monster->Entity.Position = nextPosition;
-        MoveGirdItem(CastingVector2D<int>(currentPosition), CastingVector2D<int>(nextPosition), GRID_ITEM_TYPE::MONSTER);
+        monster->Entity.Position = nextPoint;
+        MoveGirdItem(CastingVector2D<int>(currentPoint), CastingVector2D<int>(nextPoint), GRID_ITEM_TYPE::MONSTER);
     }
     else
     {
@@ -259,13 +266,16 @@ bool CanFire(const MONSTER* const monster)
 
 void MonsterFire(MONSTER* const monster)
 {
+    static const int FireDegree = 90;
+    static const vector2D<int> FireSpawnOffset = vector2D<int>{ 0, 1 };
+
     if (CanFire(monster) == true)
     {
-        vector2D<unsigned int> bulletSpawnPoint = CastingVector2D<unsigned int>(monster->Entity.Position);
-        bulletSpawnPoint.y += 1;
+        // create bullet
+        const vector2D<unsigned int> bulletSpawnPoint = CastingVector2D<unsigned int>(monster->Entity.Position) + FireSpawnOffset;
+        CreateBullet(bulletSpawnPoint, FireDegree, monster->Entity.Att, BULLET_CREATOR_TYPE::MONSTER);
 
-        CreateBullet(bulletSpawnPoint, 270, monster->Entity.Att, BULLET_CREATOR_TYPE::MONSTER);
-
+        // fire cooltime
         monster->LastFireTime = timeGetTime() + (rand() % monster->FireCoolTimeRange);
     }
 }

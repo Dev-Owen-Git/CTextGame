@@ -33,6 +33,6 @@ struct MONSTER
 
 	unsigned int MoveType;
 
-	vector2D<int> MoveDir = { 1, 1 };
+	vector2D<double> MoveDir = { 1, 1 };
 };
 
