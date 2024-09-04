@@ -114,7 +114,7 @@ void BulletMove(Bullet* const bullet)
 	bullet->Position += nextPosition;
 
 	// 비활성화 조건
-	if (bullet->Position.y >= MAP_HIGHT_SIZE || bullet->Position.y < 0)
+	if (bullet->Position.x <= 0 || bullet->Position.x >= MAP_WITDH_SIZE || bullet->Position.y >= MAP_HIGHT_SIZE || bullet->Position.y <= 0)
 	{
 		bullet->IsViaild = false;
 	}

@@ -117,6 +117,10 @@ void FirePlayerBullet()
 	// create bullet
 	const vector2D<unsigned int> bulletSpawnPoint = CastingVector2D<unsigned int>(Player.Entity.Position) + FireSpawnOffset;
 	CreateBullet(bulletSpawnPoint, FireDregree, Player.Entity.Att, BULLET_CREATOR_TYPE::PLAYER);
+	CreateBullet(bulletSpawnPoint, FireDregree-10, Player.Entity.Att, BULLET_CREATOR_TYPE::PLAYER);
+	CreateBullet(bulletSpawnPoint, FireDregree+10, Player.Entity.Att, BULLET_CREATOR_TYPE::PLAYER);
+	CreateBullet(bulletSpawnPoint, FireDregree-20, Player.Entity.Att, BULLET_CREATOR_TYPE::PLAYER);
+	CreateBullet(bulletSpawnPoint, FireDregree+20, Player.Entity.Att, BULLET_CREATOR_TYPE::PLAYER);
 
 	// reset fire
 	Player.LastFireTime = timeGetTime();
