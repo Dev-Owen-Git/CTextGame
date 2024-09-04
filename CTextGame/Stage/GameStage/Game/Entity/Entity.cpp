@@ -18,7 +18,7 @@ void EntityUnVailed(ENTITY* const entity, const bool removeToGrid, const GRID_IT
 
 	if (removeToGrid == true)
 	{
-		RemoveGridItem(CastingVector2D<int>(entity->Position), (GRID_ITEM_TYPE)girdItemType);
+		RemoveGridItem(CastingVector2D<int>(entity->Position), girdItemType);
 	}
 }
 
