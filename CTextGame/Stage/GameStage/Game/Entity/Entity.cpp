@@ -6,8 +6,8 @@ void InitEntity(ENTITY* const entity, const unsigned int hp, const unsigned att,
 {
 	entity->Hp = hp;
 	entity->Att = att;
-	entity->Position = position;
 	entity->Speed = speed;
+	entity->Position = position;
 	entity->IsVailed = true;
 }
 
