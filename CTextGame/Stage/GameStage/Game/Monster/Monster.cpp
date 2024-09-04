@@ -91,7 +91,7 @@ bool CreateMonster(const MONSTER_FILE_INFO& monsterInfo, const STAGE_MONSTER_INF
 
 void ClearAllMonsters()
 {
-    for (int monsterIndex = 0; monsterIndex < MAX_STAGE_MONSTER_COUNT; monsterIndex++)
+    for (unsigned int monsterIndex = 0; monsterIndex < MAX_STAGE_MONSTER_COUNT; monsterIndex++)
     {
         MONSTER& monster = _monsters[monsterIndex];
         if (monster.Entity.IsVailed == true)
