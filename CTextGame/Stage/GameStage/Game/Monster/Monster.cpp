@@ -68,12 +68,10 @@ bool CreateMonster(const MONSTER_FILE_INFO& monsterInfo, const STAGE_MONSTER_INF
     // 이부분 깔끔하게 변경하면 좋을듯
 
     // entity
-    monster->Entity.Hp = monsterInfo.Hp;
-    monster->Entity.Att = monsterInfo.Att;
-    monster->Entity.Speed = monsterInfo.Speed;
-    monster->Entity.Position = stageMonsterInfo.Position;
+    InitEntity(&monster->Entity, monsterInfo.Hp, monsterInfo.Att, monsterInfo.Speed, stageMonsterInfo.Position);
 
     // move
+    monster->MoveDir = { 1, 0 };
     monster->MoveType = stageMonsterInfo.MoveType;
 
     // attack
@@ -86,7 +84,6 @@ bool CreateMonster(const MONSTER_FILE_INFO& monsterInfo, const STAGE_MONSTER_INF
 
     SetGridItem(CastingVector2D<int>(monster->Entity.Position), &monster->Entity, GRID_ITEM_TYPE::MONSTER);
 
-    monster->Entity.IsVailed = true;
     AliveMonsterCount++;
 
     return monster->Entity.IsVailed;

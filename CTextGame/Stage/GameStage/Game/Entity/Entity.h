@@ -13,6 +13,8 @@ struct ENTITY
 	vector2D<double> Position;
 };
 
+void InitEntity(ENTITY* const entity, const unsigned int hp, const unsigned att, const double speed, const vector2D<double> position);
+
 struct PLAYER
 {
 	ENTITY Entity;
@@ -33,6 +35,6 @@ struct MONSTER
 
 	unsigned int MoveType;
 
-	vector2D<double> MoveDir = { 1, 1 };
+	vector2D<double> MoveDir = { 0, 0 };
 };
 
