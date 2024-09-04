@@ -16,7 +16,7 @@ const int MAX_BULLET_COUNT = 100;
 Bullet _bullets[MAX_BULLET_COUNT];
 
 
-void BulletMove(vector2D<double> moveDir, Bullet* const bullet);
+void BulletMove(const vector2D<double> moveDir, Bullet* const bullet);
 void BulletMoveProcess(Bullet* const bullet);
 void BulletHit(ENTITY* const entity, Bullet* const bullet, const GRID_ITEM_TYPE gridType);
 bool BulletCollsion(const Bullet&  bullet, ENTITY** outEntity, GRID_ITEM_TYPE* outEntityType);
@@ -108,7 +108,7 @@ void ClearAllBullet()
 	}
 }
 
-void BulletMove(vector2D<double> moveDir, Bullet* const bullet)
+void BulletMove(const vector2D<double> moveDir, Bullet* const bullet)
 {
 	const vector2D<double> nextPosition = moveDir * (bullet->Speed * FixedDeltaTime);
 	bullet->Position += nextPosition;
