@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-static const double PI = 3.141592;
+static const double PI = 3.14159265358979323846;
 
 static double Degree2Radian(int degree)
 {
