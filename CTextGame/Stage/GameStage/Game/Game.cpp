@@ -9,8 +9,8 @@
 #include <Stage/GameStage/Game/Ui/GameUIRenderer.h>
 
 
-STAGE_FILE_INFO _stage[MAX_STAGE_COUNT];
-MONSTER_FILE_INFO _monsterInfo[MAX_MONSTER_TYPE];
+STAGE_FILE_INFO		_stage[MAX_STAGE_COUNT];
+MONSTER_FILE_INFO	_monsterInfo[MAX_MONSTER_TYPE];
 bool _isLoadStageFile = false;
 
 int CurrentStage = 0;
@@ -87,6 +87,12 @@ void SetGameStage(const  int stage)
 	CreateStage(CurrentStage);
 }
 
+void NextGameStage()
+{
+	SetGameStage(CurrentStage + 1);
+}
+
+
 void CreateStage(int stage)
 {
 	BulletInit();
@@ -105,9 +111,3 @@ void CreateStage(int stage)
 	// Player »ý¼º
 	LoadPlayerData(_stage[stage]);
 }
-
-void NetGameStage()
-{
-	SetGameStage(CurrentStage + 1);
-}
-

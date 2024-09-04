@@ -11,4 +11,4 @@ int GameRender();
 
 void SetGameStage(const int stage);
 
-void NetGameStage();
+void NextGameStage();

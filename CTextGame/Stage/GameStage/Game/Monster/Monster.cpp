@@ -114,7 +114,7 @@ void OnMonsterDead(ENTITY* const entity)
 
     if (AliveMonsterCount <= 0)
     {
-        NetGameStage();
+        NextGameStage();
     }
 }
 
