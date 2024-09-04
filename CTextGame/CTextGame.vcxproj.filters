@@ -49,6 +49,9 @@
     <Filter Include="Data\Vector2D">
       <UniqueIdentifier>{e997888d-673a-4850-939a-2a41fc500d86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameRate">
+      <UniqueIdentifier>{7f3810a1-795f-4e99-a0dc-1d9f095b66fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,12 +65,6 @@
     </ClCompile>
     <ClCompile Include="Stage\GameStage\Game\Game.cpp">
       <Filter>Stage\GameStage\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Data\GlobalData.cpp">
-      <Filter>Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameRate\FrameRate.cpp">
-      <Filter>Utility</Filter>
     </ClCompile>
     <ClCompile Include="File\File.cpp">
       <Filter>File</Filter>
@@ -102,6 +99,12 @@
     <ClCompile Include="Data\Vector2D\Vector2D.cpp">
       <Filter>Data\Vector2D</Filter>
     </ClCompile>
+    <ClCompile Include="FrameRate\FrameRate.cpp">
+      <Filter>FrameRate</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\GlobalData.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\GameEngine.h">
@@ -112,12 +115,6 @@
     </ClInclude>
     <ClInclude Include="Stage\GameStage\Game\Game.h">
       <Filter>Stage\GameStage\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Data\GlobalData.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameRate\FrameRate.h">
-      <Filter>Utility</Filter>
     </ClInclude>
     <ClInclude Include="File\File.h">
       <Filter>File</Filter>
@@ -151,6 +148,12 @@
     </ClInclude>
     <ClInclude Include="Data\Vector2D\Vector2D.h">
       <Filter>Data\Vector2D</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameRate\FrameRate.h">
+      <Filter>FrameRate</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\GlobalData.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

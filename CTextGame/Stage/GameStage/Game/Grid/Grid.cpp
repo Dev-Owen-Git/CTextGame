@@ -2,6 +2,9 @@
 
 #include <memory>
 
+#include <Stage/GameStage/Game/Player/Player.h>
+#include <Stage/GameStage/Game/Monster/Monster.h>
+
 GRID Grid[MAP_HIGHT_SIZE][MAP_WITDH_SIZE];
 
 bool GridInit()

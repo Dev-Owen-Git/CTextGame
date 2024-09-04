@@ -19,7 +19,7 @@ int(*_inputHandler[(int)StageType::STAGE_TYPE_COUNT])();
 int(*_processHandler[(int)StageType::STAGE_TYPE_COUNT])();
 int(*_renderHandler[(int)StageType::STAGE_TYPE_COUNT])();
 
-StageType currentStageType;
+StageType CurrentStageType;
 
 bool StageInit()
 {
@@ -37,25 +37,25 @@ bool SetStage(StageType type)
 		return false;
 	}
 
-	currentStageType = type;
-    return _initHandler[(int)currentStageType]();
+	CurrentStageType = type;
+    return _initHandler[(int)CurrentStageType]();
 }
 
 int StageInput()
 {
-	_inputHandler[(int)currentStageType]();
+	_inputHandler[(int)CurrentStageType]();
 	return 0;
 }
 
 int StageProcess()
 {
-	_processHandler[(int)currentStageType]();
+	_processHandler[(int)CurrentStageType]();
 	return 0;
 }
 
 int StageRender()
 {
-	_renderHandler[(int)currentStageType]();
+	_renderHandler[(int)CurrentStageType]();
 	return 0;
 }
 

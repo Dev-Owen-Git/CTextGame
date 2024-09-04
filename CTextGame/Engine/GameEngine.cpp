@@ -9,6 +9,8 @@
 #include <cstdio>
 #include <Windows.h>
 
+static const int DEFAULT_FPS = 50;
+
 void SetWindow(const int wdith, const int hegiht)
 {   
     char windowSizeBuffer[256] = "mode con: cols=%d lines=%d";
@@ -20,9 +22,11 @@ bool GameEngineInit()
 {
     srand((unsigned int)time(NULL));
 
+    // consle window size
     SetWindow(RENDER_BUFFER_WIDTH_SIZE, RENDER_BUFFER_HEIGHT_SIZE);
 
-    InitFrameRate(50);
+    // frame
+    InitFrameRate(DEFAULT_FPS);
 
     if (StageInit() == false)
     {

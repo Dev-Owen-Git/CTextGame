@@ -1,7 +1,15 @@
 #pragma once
 
+#include <File/File.h>
 #include <Stage/GameStage/Game/Entity/Entity.h>
-#include "File/File.h"
+
+struct PLAYER
+{
+	ENTITY Entity;
+
+	unsigned int LastFireTime;
+	unsigned int FireCoolTime;
+};
 
 extern PLAYER Player;
 
@@ -11,6 +19,6 @@ int PlayerInput();
 int PlayerPorcess();
 int PlayerRender();
 
-void PlayerHit(ENTITY* const entity, const int damage);
+void OnPlayerDead(ENTITY* const entity);
 
-void LoadPlayerData(const STAGE_FILE_INFO* stageData);
+void LoadPlayerData(const STAGE_FILE_INFO& stageData);

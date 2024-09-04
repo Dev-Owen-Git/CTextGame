@@ -1,8 +1,8 @@
 #include "Player.h"
 
 #include <Stage/Stage.h>
-#include <Stage/GameStage/Game/Bullet/Bullet.h>
 #include <Stage/GameStage/Game/Grid/Grid.h>
+#include <Stage/GameStage/Game/Bullet/Bullet.h>
 
 #include <Renderer/Renderer.h>
 
@@ -23,8 +23,7 @@ void Move(const vector2D<double> dir);
 
 bool PlayerInit()
 {
-	Player.FireCoolTime = 100;
-	return false;
+	return true;
 }
 
 int PlayerInput()
@@ -66,32 +65,28 @@ int PlayerRender()
 	return 0;
 }
 
-void PlayerHit(ENTITY* const entity, const int damage)
+void OnPlayerDead(ENTITY* const entity)
 {
-	entity->Hp -= damage;
+	// 비활성화
+	EntityUnVailed(entity, true, GRID_ITEM_TYPE::PLAYER);
 
-	if (entity->Hp <= 0)
-	{
-		entity->IsVailed = false;
-		RemoveGridItem(CastingVector2D<int>(entity->Position), GRID_ITEM_TYPE::PLAYER);
-
-		SetStage(StageType::Over);
-	}
+	// 게임 종료
+	SetStage(StageType::Over);
 }
 
-void LoadPlayerData(const STAGE_FILE_INFO* stageData)
+void LoadPlayerData(const STAGE_FILE_INFO& stageData)
 {
-	Player.Entity.Hp = 10;
-	Player.Entity.Att = 10;
-	Player.Entity.Speed = 10;
+	const unsigned int	DEFAULT_HP = 10;
+	const unsigned int	DEFAULT_ATTACK = 10;
+	const double		DEFAULT_SPEED = 10;
 
+	// Init Entiy
+	InitEntity(&Player.Entity, DEFAULT_HP, DEFAULT_ATTACK, DEFAULT_SPEED, stageData.PlayerSpawnPoint);
+		
+	// Attack Cool
 	Player.FireCoolTime = 100;
 
-	Player.Entity.Position = stageData->PlayerSpawnPoint;
-
 	SetGridItem(CastingVector2D<int>(Player.Entity.Position), &Player, GRID_ITEM_TYPE::PLAYER);
-
-	Player.Entity.IsVailed = true;
 }
 
 
@@ -135,7 +130,7 @@ void FirePlayerBullet()
 // Player Move
 void Move(const vector2D<double> dir)
 {
-	const vector2D<int>		oldPoint		= CastingVector2D<int>(Player.Entity.Position);
+	const vector2D<int>		currentPoint		= CastingVector2D<int>(Player.Entity.Position);
 	const vector2D<double>	moveDir			= dir * (Player.Entity.Speed * FixedDeltaTime);
 	const vector2D<double>	nextMovePoint	= Player.Entity.Position + moveDir;
 
@@ -145,5 +140,5 @@ void Move(const vector2D<double> dir)
 	}
 
 	Player.Entity.Position = nextMovePoint;
-	MoveGirdItem(oldPoint, CastingVector2D<int>(Player.Entity.Position), GRID_ITEM_TYPE::PLAYER);
+	MoveGirdItem(currentPoint, CastingVector2D<int>(Player.Entity.Position), GRID_ITEM_TYPE::PLAYER);
 }

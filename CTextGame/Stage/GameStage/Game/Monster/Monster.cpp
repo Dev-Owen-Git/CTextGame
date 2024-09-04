@@ -1,8 +1,8 @@
 #include "Monster.h"
 
+#include <Stage/GameStage/Game/Game.h>
 #include <Stage/GameStage/Game/Grid/Grid.h>
 #include <Stage/GameStage/Game/Bullet/Bullet.h>
-#include <Stage/GameStage/Game/Game.h>
 
 #include <FrameRate/FrameRate.h>
 
@@ -75,9 +75,9 @@ bool CreateMonster(const MONSTER_FILE_INFO& monsterInfo, const STAGE_MONSTER_INF
     monster->MoveType = stageMonsterInfo.MoveType;
 
     // attack
-    monster->FireCoolTime = monsterInfo.FireCoolTime;
-    monster->FireCoolTimeRange = monsterInfo.FireCoolTimeRange;
-    monster->LastFireTime = timeGetTime() + (rand() % monster->FireCoolTimeRange);
+    monster->FireCoolTime       = monsterInfo.FireCoolTime;
+    monster->FireCoolTimeRange  = monsterInfo.FireCoolTimeRange;
+    monster->LastFireTime       = timeGetTime() + (rand() % monster->FireCoolTimeRange);
 
     // sprite
     monster->Sprite = monsterInfo.Sprite;
@@ -104,17 +104,13 @@ void ClearAllMonsters()
 }
 
 
-void MonsterHit(ENTITY* const entity, const int damage)
+void OnMonsterDead(ENTITY* const entity)
 {
-    entity->Hp -= damage;
+    // 비활성화
+    EntityUnVailed(entity, true, GRID_ITEM_TYPE::MONSTER);
 
-    if (entity->Hp <= 0)
-    {
-        entity->IsVailed = false;
-
-        AliveMonsterCount--;
-        RemoveGridItem(CastingVector2D<int>(entity->Position), GRID_ITEM_TYPE::MONSTER);
-    }
+    // 생존 몬스터 감소
+    AliveMonsterCount--;
 
     if (AliveMonsterCount <= 0)
     {

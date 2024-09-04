@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
-#include <Stage/GameStage/Game/Entity/Entity.h>
 #include <Stage/GameStage/Game/Grid/Grid.h>
+#include <Stage/GameStage/Game/Entity/Entity.h>
 #include <Stage/GameStage/Game/Player/Player.h>
 #include <Stage/GameStage/Game/Monster/Monster.h>
 
@@ -88,10 +88,10 @@ void CreateBullet(const vector2D<unsigned int> spawnPoint, const int degree, con
 
 		if (bullet.IsViaild == false)
 		{
-			bullet.Position = CastingVector2D<double>(spawnPoint);
 			bullet.Att = attDamage;
-			bullet.moveDir = GetNormalizeDiraction<double>(degree);
 			bullet.Speed = 20;
+			bullet.Position = CastingVector2D<double>(spawnPoint);
+			bullet.moveDir = GetNormalizeDiraction<double>(degree);
 			bullet.IsEmemy = (type == BULLET_CREATOR_TYPE::MONSTER);
 			bullet.IsViaild = true;
 			break;
@@ -113,6 +113,7 @@ void BulletMove(Bullet* const bullet)
 	const vector2D<double> nextPosition = bullet->moveDir * (bullet->Speed * FixedDeltaTime);
 	bullet->Position += nextPosition;
 
+	// 비활성화 조건
 	if (bullet->Position.y >= MAP_HIGHT_SIZE || bullet->Position.y < 0)
 	{
 		bullet->IsViaild = false;
@@ -121,14 +122,7 @@ void BulletMove(Bullet* const bullet)
 
 void BulletMoveProcess(Bullet* const bullet)
 {
-	if (bullet->IsEmemy == true)
-	{
-		BulletMove(bullet);
-	}
-	else
-	{
-		BulletMove(bullet);
-	}
+	BulletMove(bullet);
 }
 
 void BulletHit(ENTITY* const entity, Bullet* const bullet, const GRID_ITEM_TYPE gridType)
@@ -136,10 +130,10 @@ void BulletHit(ENTITY* const entity, Bullet* const bullet, const GRID_ITEM_TYPE 
 	switch (gridType)
 	{
 	case GRID_ITEM_TYPE::PLAYER:
-		PlayerHit(entity, bullet->Att);
+		EntityHit(entity, bullet->Att, OnPlayerDead);
 		break;
 	case GRID_ITEM_TYPE::MONSTER:
-		MonsterHit(entity, bullet->Att);
+		EntityHit(entity, bullet->Att, OnMonsterDead);
 		break;
 	default:
 		break;

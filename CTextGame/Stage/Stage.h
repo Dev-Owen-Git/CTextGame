@@ -30,4 +30,4 @@ int OnOverInput();
 int OnOverProcess();
 int OnOverRender();
 
-extern StageType currentStageType;
+extern StageType CurrentStageType;

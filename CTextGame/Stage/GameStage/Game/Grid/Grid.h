@@ -1,20 +1,20 @@
 #pragma once
 
-#include <Stage/GameStage/Game/Entity/Entity.h>
-#include <Data/Vector2D/Vector2D.h>
 #include <Data/GlobalData.h>
-
-struct GRID
-{
-	MONSTER* Monster = nullptr;
-	PLAYER* Player = nullptr;
-};
+#include <Data/Vector2D/Vector2D.h>
 
 enum class GRID_ITEM_TYPE
 {
 	MONSTER,
 	PLAYER,
 };
+
+struct GRID
+{
+	struct MONSTER*	Monster	= nullptr;
+	struct PLAYER*	Player	= nullptr;
+};
+
 
 extern GRID Grid[MAP_HIGHT_SIZE][MAP_WITDH_SIZE];
 

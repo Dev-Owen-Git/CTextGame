@@ -11,6 +11,7 @@
 
 STAGE_FILE_INFO _stage[MAX_STAGE_COUNT];
 MONSTER_FILE_INFO _monsterInfo[MAX_MONSTER_TYPE];
+bool _isLoadStageFile = false;
 
 int CurrentStage = 0;
 
@@ -18,15 +19,34 @@ void CreateStage(int stage);
 
 bool GameInit()
 {
-	if (_stage[0].isVailed == false)
+	// 파일이 불러와있는지 확인
+	if (_isLoadStageFile == false)
 	{
 		LoadStageFiles(_stage);
 		LoadMonsterFiles(_monsterInfo);
+
+		_isLoadStageFile = true;
 	}
 
-	GridInit();
-	BulletInit();
-	MonsterInit();
+	if (GridInit() == false)
+	{
+		return false;
+	}
+
+	if (BulletInit() == false)
+	{
+		return false;
+	}
+
+	if (MonsterInit() == false)
+	{
+		return false;
+	}
+
+	if (PlayerInit() == false)
+	{
+		return false;
+	}
 
 	SetGameStage(0);
 	return true;
@@ -69,6 +89,8 @@ void SetGameStage(const  int stage)
 
 void CreateStage(int stage)
 {
+	BulletInit();
+
 	// Monster 생성
 	for (const auto& stageMonsterInfo : _stage[stage].MonsterInfos)
 	{
@@ -81,7 +103,7 @@ void CreateStage(int stage)
 	}
 
 	// Player 생성
-	LoadPlayerData(&_stage[stage]);
+	LoadPlayerData(_stage[stage]);
 }
 
 void NetGameStage()
