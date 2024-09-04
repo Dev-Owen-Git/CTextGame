@@ -19,12 +19,37 @@ int(*_inputHandler[(int)StageType::STAGE_TYPE_COUNT])();
 int(*_processHandler[(int)StageType::STAGE_TYPE_COUNT])();
 int(*_renderHandler[(int)StageType::STAGE_TYPE_COUNT])();
 
+// Title
+bool OnTitleInit();
+int OnTitleInput();
+int OnTitleProcess();
+int OnTitleRender();
+
+// Game
+bool OnGameInit();
+int OnGameInput();
+int OnGameProcess();
+int OnGameRender();
+
+// Win
+bool OnWinInit();
+int OnWinInput();
+int OnWinProcess();
+int OnWinRender();
+
+// Game Over
+bool OnOverInit();
+int OnOverInput();
+int OnOverProcess();
+int OnOverRender();
+
 StageType CurrentStageType;
 
 bool StageInit()
 {
 	AddStage(Title);
 	AddStage(Game);
+	AddStage(Win);
 	AddStage(Over);
 
 	return true;
@@ -133,6 +158,36 @@ int OnGameRender()
 
 
 
+
+// Win
+bool OnWinInit()
+{
+	return true;
+}
+
+int OnWinInput()
+{
+	if (GetAsyncKeyState(VK_F2))
+	{
+		if (SetStage(StageType::Game) == false)
+		{
+			__debugbreak();
+		}
+		return 0;
+	}
+	return 0;
+}
+
+int OnWinProcess()
+{
+	return 0;
+}
+
+int OnWinRender()
+{
+	CopyDataToRendBuffer({ 13, 2 }, "~~ WIN ~~");
+	return 0;
+}
 
 
 

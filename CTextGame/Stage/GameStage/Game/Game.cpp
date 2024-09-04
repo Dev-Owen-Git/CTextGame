@@ -3,10 +3,12 @@
 #include <File/File.h>
 
 #include <Stage/GameStage/Game/Grid/Grid.h>
+#include <Stage/GameStage/Game/Bullet/Bullet.h>
 #include <Stage/GameStage/Game/Player/Player.h>
 #include <Stage/GameStage/Game/Monster/Monster.h>
-#include <Stage/GameStage/Game/Bullet/Bullet.h>
 #include <Stage/GameStage/Game/Ui/GameUIRenderer.h>
+
+#include <Stage/Stage.h>
 
 
 STAGE_FILE_INFO		_stage[MAX_STAGE_COUNT];
@@ -79,6 +81,7 @@ void SetGameStage(const  int stage)
 {
 	if (_stage[stage].isVailed == false)
 	{
+		SetStage(StageType::Win);
 		return;
 	}
 
